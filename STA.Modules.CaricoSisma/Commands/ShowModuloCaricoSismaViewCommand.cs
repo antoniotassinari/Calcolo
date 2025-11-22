@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
-using STA.Interfaccia.Common.Events;
 using STA.Modules.CaricoSisma.ViewModels;
-
 
 namespace STA.Modules.CaricoSisma.Commands
 {
-    class ShowModuloCaricoSismaViewCommand : ICommand
+    /// <summary>
+    /// Command to show the Seismic Load module view
+    /// </summary>
+    public class ShowModuloCaricoSismaViewCommand : ICommand
     {
         private ModuloCaricoSismaPulsanteViewModel m_ViewModel;
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ShowModuloCaricoSismaViewCommand(ModuloCaricoSismaPulsanteViewModel viewModel)
         {
             m_ViewModel = viewModel;
@@ -32,38 +32,8 @@ namespace STA.Modules.CaricoSisma.Commands
 
         public void Execute(object parameter)
         {
-            // Initialize
-            var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
-
-            // Show Ribbon Tab
-            var moduleSismaRibbonTab = new Uri("ModuloCaricoSismaRibbonTab", UriKind.Relative);
-            regionManager.RequestNavigate("RibbonRegion", moduleSismaRibbonTab);
-
-            // Show Navigator
-            //var moduleANavigator = new Uri("ModuleANavigator", UriKind.Relative);
-            //regionManager.RequestNavigate("NavigatorRegion", moduleANavigator);
-
-            /* We invoke the NavigationCompleted() callback 
-             * method in our final  navigation request. */
-
-            // Show Workspace
-            var moduloCaricoSismaWorkspace = new Uri("ModuloCaricoSismaWorkSpace", UriKind.Relative);
-            regionManager.RequestNavigate("WorkspaceRegion", moduloCaricoSismaWorkspace, NavigationCompleted);
-        }
-
-        /// <summary>
-        /// Callback method invoked when navigation has completed.
-        /// </summary>
-        /// <param name="result">Provides information about the result of the navigation.</param>
-        private void NavigationCompleted(NavigationResult result)
-        {
-            // Exit if navigation was not successful
-            if (result.Result != true) return;
-
-            // Publish ViewRequestedEvent
-            var eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            var navigationCompletedEvent = eventAggregator.GetEvent<NavigationCompletedEvent>();
-            navigationCompletedEvent.Publish("ModuloCaricoSisma");
+            // Execute command logic
+            // Prism navigation removed - implement your navigation logic here
         }
     }
 }

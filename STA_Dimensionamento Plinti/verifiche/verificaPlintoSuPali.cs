@@ -46,9 +46,9 @@ namespace STA_Dimensionamento_Plinti.verifiche
             {
                 double reazionePalo = rea.FZ / pli.Pali.Count;
 
-                reazionePalo += Math.Abs(rea.MX) / pli.Jx() * Math.Abs(paloCheck.Posizione.y)/100 * paloCheck.Area()/10000;
+                reazionePalo += Math.Abs(rea.MX) / pli.Jx() * Math.Abs(paloCheck.Posizione.Y)/100 * paloCheck.Area()/10000;
 
-                reazionePalo += Math.Abs(rea.MY) / pli.Jy() * Math.Abs(paloCheck.Posizione.x) / 100 * paloCheck.Area() / 10000;
+                reazionePalo += Math.Abs(rea.MY) / pli.Jy() * Math.Abs(paloCheck.Posizione.X) / 100 * paloCheck.Area() / 10000;
 
                 sTaglioSuPalo = Math.Sqrt(Math.Pow(rea.FX / pli.Pali.Count, 2) + Math.Pow(rea.FY / pli.Pali.Count, 2));
 

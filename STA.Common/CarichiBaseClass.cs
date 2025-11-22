@@ -8,12 +8,11 @@ using System.Windows.Forms;
 
 namespace STA.Common
 {
+    /// <summary>
+    /// Base class per i carichi
+    /// </summary>
     public class CarichiBaseClass
     {
-        #region Metodi
-
-
-
-        #endregion
+        // Placeholder for future load management functionality
     }
 }

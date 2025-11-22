@@ -22,7 +22,6 @@ namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneSezione.Views
     /// <summary>
     /// Logica di interazione per ModuloGestioneSezioneSelectionView.xaml
     /// </summary>
-    [ViewSortHint("01")]
     public partial class ModuloGestioneSezioneSelectionView : UserControl
     {
 

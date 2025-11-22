@@ -7,12 +7,11 @@ namespace STA.Common
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {
-        #region membri Inotifypropertychanged
+        #region Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-
 
         #region Administrative Properties
 
@@ -30,14 +29,11 @@ namespace STA.Common
         public virtual void RaisePropertyChangedEvent(string propertyName)
         {
             // Exit if changes ignored
-            if (IgnorePropertyChangeEvents) return;
+            if (IgnorePropertyChangeEvents) 
+                return;
 
-            // Exit if no subscribers
-            if (PropertyChanged == null) return;
-
-            // Raise event
-            var e = new PropertyChangedEventArgs(propertyName);
-            PropertyChanged(this, e);
+            // Raise event with null-safe invocation
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

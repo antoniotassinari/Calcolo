@@ -62,8 +62,8 @@ namespace STA_Dimensionamento_Plinti.verifiche
         public verificaMeyerhof(Reazione rea, Plinto pli)
         {
             sValoreLimite = pli.ValoreLimite;
-            sEy = Math.Abs(rea.MX + rea.FZ * pli.EccentricitaPilastro.y / 100)  * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
-            sEx = Math.Abs(rea.MY + rea.FZ * pli.EccentricitaPilastro.x / 100) * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
+            sEy = Math.Abs(rea.MX + rea.FZ * pli.EccentricitaPilastro.Y / 100)  * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
+            sEx = Math.Abs(rea.MY + rea.FZ * pli.EccentricitaPilastro.X / 100) * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
             sAreaEff = (pli.A - 2 * Ex) * (pli.B - 2 * Ey);
             sPressione = (pli.PesoTotale() + rea.FZ * 100) / AreaEff;
             sReazioneDiCalcolo = rea;

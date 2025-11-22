@@ -1,19 +1,22 @@
-﻿using System.Windows.Input;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
+﻿using System;
+using System.Windows.Input;
 using STA.Interfaccia.Common.BaseClasses;
-using STA.Interfaccia.Common.Events;
 using STA.Modules.CaricoNeve.Commands;
 
 namespace STA.Modules.CaricoNeve.ViewModels
 {
-    public class ModuloCaricoNevePulsanteViewModel : ViewModelBase, INavigationAware
+    /// <summary>
+    /// ViewModel for Snow Load Button
+    /// </summary>
+    public class ModuloCaricoNevePulsanteViewModel : ViewModelBase
     {
         private bool? p_IsChecked;
 
-        public ICommand ShowModuloCaricoNeve {get; set;}
+        public ICommand ShowModuloCaricoNeve { get; set; }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ModuloCaricoNevePulsanteViewModel()
         {
             this.Initialize();
@@ -25,7 +28,6 @@ namespace STA.Modules.CaricoNeve.ViewModels
         public bool? IsChecked
         {
             get { return p_IsChecked; }
-
             set
             {
                 base.RaisePropertyChangingEvent("IsChecked");
@@ -34,43 +36,26 @@ namespace STA.Modules.CaricoNeve.ViewModels
             }
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            throw new System.NotImplementedException();
-        }
-
         /// <summary>
-        /// Sets the IsChecked state of the Task Button when navigation is completed.
+        /// Handles navigation completion
         /// </summary>
-        /// <param name="publisher">The publisher of the event.</param>
         private void OnNavigationCompleted(string publisher)
         {
             // Exit if this module published the event
-            if (publisher == "ModuloCaricoNeve") return;
+            if (publisher == "ModuloCaricoNeve") 
+                return;
 
             // Otherwise, uncheck this button
             this.IsChecked = false;
         }
 
+        /// <summary>
+        /// Initializes the view model
+        /// </summary>
         private void Initialize()
         {
             this.ShowModuloCaricoNeve = new ShowModuloCaricoNeveViewCommand(this);
-
             this.IsChecked = false;
-
-            var eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            var navigationCompletedEvent = eventAggregator.GetEvent<NavigationCompletedEvent>();
-            navigationCompletedEvent.Subscribe(OnNavigationCompleted, ThreadOption.UIThread);
         }
     }
 }

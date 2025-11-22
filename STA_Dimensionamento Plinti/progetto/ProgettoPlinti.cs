@@ -259,7 +259,7 @@ namespace STA_Dimensionamento_Plinti.progetto
         {
             
 
-            Word.Application word_app = new Word.ApplicationClass();
+            Word.Application word_app = new Word.Application();
             word_app.Visible = true;
             object endOfDoc = "\\endofdoc";
 

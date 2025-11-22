@@ -19,7 +19,6 @@ namespace STA.Modules.CaricoVento.Views
     /// <summary>
     /// Logica di interazione per ModuloCaricoVentoPulsante.xaml
     /// </summary
-    [ViewSortHint("02")]
     public partial class ModuloCaricoVentoPulsante : UserControl
     {
         public ModuloCaricoVentoPulsante(ModuloCaricoVentoPulsanteViewModel viewModel)

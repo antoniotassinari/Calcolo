@@ -2,27 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using STA.Modules.CaricoSisma.Views;
+
 using STA.Carichi.Sisma;
 
 namespace STA.Modules.CaricoSisma
 {
-    public class ModuloCaricoSisma : IModule
+    /// <summary>
+    /// Module initialization for Seismic Load
+    /// </summary>
+    public class ModuloCaricoSisma
     {
-        public static Sisma SismaAssociato = new Sisma(12.19944,﻿44.41778);
+        public static Sisma SismaAssociato = new Sisma(12.19944, 44.41778);
 
+        /// <summary>
+        /// Initializes the module
+        /// </summary>
         public void Initialize()
         {
-            var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
-            regionManager.RegisterViewWithRegion("TaskButtonRegion", typeof(ModuloSismaPulsante));
-
-            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
-            container.RegisterType<Object, ModuloCaricoSismaRibbonTab>("ModuloCaricoSismaRibbonTab");
-            container.RegisterType<Object, ModuloCaricoSismaWorkSpace>("ModuloCaricoSismaWorkSpace");
+            // Module initialization logic - Prism dependency removed
+            // Register views and viewmodels as needed for your application
         }
     }
 }

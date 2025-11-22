@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Regions;
 using STA.Modules.CaricoSisma.ViewModels;
 
 namespace STA.Modules.CaricoSisma.Views
@@ -19,7 +18,7 @@ namespace STA.Modules.CaricoSisma.Views
     /// <summary>
     /// Logica di interazione per ModuloCaricoSismaWorkSpace.xaml
     /// </summary>
-    public partial class ModuloCaricoSismaWorkSpace : UserControl, IRegionMemberLifetime
+    public partial class ModuloCaricoSismaWorkSpace : UserControl
     {
         
 
@@ -28,11 +27,6 @@ namespace STA.Modules.CaricoSisma.Views
             
             InitializeComponent();
             ControlloSisma.SismaAssociato = ModuloCaricoSisma.SismaAssociato;
-        }
-
-        bool IRegionMemberLifetime.KeepAlive
-        {
-            get { return false; }
         }
     }
 }

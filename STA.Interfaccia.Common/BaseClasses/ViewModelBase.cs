@@ -1,16 +1,16 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace STA.Interfaccia.Common.BaseClasses
 {
+    /// <summary>
+    /// Abstract base class for view models supporting property change notifications
+    /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanging, INotifyPropertyChanged
     {
-        #region INotifyPropertyChanging Members
+        #region Events
 
         public event PropertyChangingEventHandler PropertyChanging;
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,14 +34,11 @@ namespace STA.Interfaccia.Common.BaseClasses
         public virtual void RaisePropertyChangedEvent(string propertyName)
         {
             // Exit if changes ignored
-            if (IgnorePropertyChangeEvents) return;
+            if (IgnorePropertyChangeEvents) 
+                return;
 
-            // Exit if no subscribers
-            if (PropertyChanged == null) return;
-
-            // Raise event
-            var e = new PropertyChangedEventArgs(propertyName);
-            PropertyChanged(this, e);
+            // Raise event with null-safe invocation
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -51,14 +48,11 @@ namespace STA.Interfaccia.Common.BaseClasses
         public virtual void RaisePropertyChangingEvent(string propertyName)
         {
             // Exit if changes ignored
-            if (IgnorePropertyChangeEvents) return;
+            if (IgnorePropertyChangeEvents) 
+                return;
 
-            // Exit if no subscribers
-            if (PropertyChanging == null) return;
-
-            // Raise event
-            var e = new PropertyChangingEventArgs(propertyName);
-            PropertyChanging(this, e);
+            // Raise event with null-safe invocation
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
         }
 
         #endregion

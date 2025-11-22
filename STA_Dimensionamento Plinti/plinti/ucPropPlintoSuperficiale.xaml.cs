@@ -62,8 +62,8 @@ namespace STA_Dimensionamento_Plinti
                 tbQuota.Text = plintoIn.Imposta.ToString("F0");
                 tbPresLimite.Text = plintoIn.ValoreLimite.ToString("F2");
 
-                tbEccX.Text = plinto.EccentricitaPilastro.x.ToString();
-                tbEccY.Text = plinto.EccentricitaPilastro.y.ToString();
+                tbEccX.Text = plinto.EccentricitaPilastro.X.ToString();
+                tbEccY.Text = plinto.EccentricitaPilastro.Y.ToString();
 
                 textBoxArea.Text = plinto.Area.ToString("F0");
 

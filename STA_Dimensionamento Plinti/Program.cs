@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-
 
 namespace STA_Dimensionamento_Plinti
 {
-    static class Program
+    /// <summary>
+    /// Main entry point for the application
+    /// </summary>
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.

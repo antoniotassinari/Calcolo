@@ -4,31 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
-
 using STA.Prefabbricato.TraveIsostatica;
 using STA.Prefabbricato.TraveIsostatica.ViewModels;
 
-
 namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneTraveIsostatica
 {
-    public class ModuloGestioneTraveIsostatica : IModule
+    /// <summary>
+    /// Module initialization for Trave Isostatica management
+    /// </summary>
+    public class ModuloGestioneTraveIsostatica
     {
         private static TraveIsostatica.TraveIsostatica Trave = new TraveIsostatica.TraveIsostatica();
         public static TraveIsostaticaViewModel traveIsostaticaViewModel = new TraveIsostaticaViewModel(Trave);
 
+        /// <summary>
+        /// Initializes the module
+        /// </summary>
         public void Initialize()
         {
-
-            /// Varie inizializzazione per l'interfaccia prism
-            var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
-            regionManager.RegisterViewWithRegion("RibbonRegion", typeof(Views.ModuloGestioneTraveIsostaticaMainRibbonTab));
-
-            //MessageBox.Show("Modulo Trave Prefabbricata Inizializzato");
+            // Module initialization logic - Prism dependency removed
+            // Register views and viewmodels as needed for your application
         }
     }
 }

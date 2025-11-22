@@ -1,73 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
-
 using STA.Common;
 using STA.Geometria.Masse.Commands;
-
 using STA.Geometria.ViewModels;
 
 namespace STA.Geometria.Masse.ViewModels
 {
+    /// <summary>
+    /// View model per la modifica di una sezione
+    /// </summary>
     public class SezioneEditViewModel : ViewModelBase
     {
         private Sezione _sezione;
 
-        #region Membri
+        #region Properties
 
         /// <summary>
-        /// classe modello associato al viewmodel
+        /// Classe modello associato al viewmodel
         /// </summary>
-        public Sezione sezione
+        public Sezione Sezione
         {
             get { return _sezione; }
             set 
             { 
                 _sezione = value;
-                RaisePropertyChangedEvent("sezione");
+                RaisePropertyChangedEvent("Sezione");
             }
         }
-
-        #endregion
-
-        #region Membri pubblici
 
         /// <summary>
         /// Nome della sezione
         /// </summary>
         public string NomeSezione
         {
-            get { return sezione.Nome; }
+            get { return _sezione != null ? _sezione.Nome : string.Empty; }
             set
             {
-                sezione.Nome = value;
-                RaisePropertyChangedEvent("NomeSezione");
+                if (_sezione != null)
+                {
+                    _sezione.Nome = value;
+                    RaisePropertyChangedEvent("NomeSezione");
+                }
             }
         }
 
+        /// <summary>
+        /// Comando per aggiungere un vertice
+        /// </summary>
         public ICommand AggiungiVerticeComando { get; set; }
 
+        /// <summary>
+        /// Collezione di vertici view model
+        /// </summary>
         public ObservableCollection<Punto2DViewModel> Vertici { get; set; }
 
+        /// <summary>
+        /// Area della sezione
+        /// </summary>
         public double Area
         {
-            get {return sezione.Area;}
-         }
+            get { return _sezione != null ? _sezione.Area : 0.0; }
+        }
 
-
+        /// <summary>
+        /// View model del baricentro
+        /// </summary>
         public Punto2DViewModel BaricentroVM
         {
-            get { return new Punto2DViewModel(sezione.Baricentro); }
+            get 
+            { 
+                return _sezione != null && _sezione.Baricentro != null 
+                    ? new Punto2DViewModel(_sezione.Baricentro) 
+                    : null; 
+            }
         }
 
         #endregion
 
-        #region Costruttori
+        #region Constructors
 
         /// <summary>
         /// Costruttore con parametro
@@ -75,6 +89,9 @@ namespace STA.Geometria.Masse.ViewModels
         /// <param name="sezIn">Sezione in ingresso</param>
         public SezioneEditViewModel(Sezione sezIn)
         {
+            if (sezIn == null)
+                throw new ArgumentNullException(nameof(sezIn));
+                
             _sezione = sezIn;
             AggiungiVerticeComando = new AggiungiVerticeCommand(this);
         }
@@ -84,52 +101,56 @@ namespace STA.Geometria.Masse.ViewModels
         /// </summary>
         public SezioneEditViewModel() : this(new Sezione())
         {
-            
         }
 
         #endregion
 
-
-        #region Metodi
+        #region Methods
 
         /// <summary>
-        /// Aggiunge un vertice in coda alla lista
+        /// Aggiunge un nuovo vertice alla sezione
         /// </summary>
-        /// <param name="puntoIn"></param>
         public void AggiungiVertice()
         {
-            Punto2D puntoNuovo = new Punto2D { ID = (sezione.Vertici.Count + 1).ToString() };
-            sezione.Vertici.Add(puntoNuovo);
+            if (_sezione == null) 
+                return;
+
+            var puntoNuovo = new Punto2D { ID = (_sezione.Vertici.Count + 1).ToString() };
+            _sezione.Vertici.Add(puntoNuovo);
             AggiornaProprietà();
         }
 
         /// <summary>
-        /// Aggiorna tutte le proprietà
+        /// Aggiorna tutte le proprietà del viewmodel
         /// </summary>
         public void AggiornaProprietà()
         {
-            sezione.RicalcolaProprietà();
-            if (Vertici == null)
-            {
-                Vertici = new ObservableCollection<Punto2DViewModel>();
-            }
-            Vertici.Clear();
-            if (sezione.Vertici != null)
-            {
+            if (_sezione == null) 
+                return;
 
-                foreach (Punto2D puntoIn in sezione.Vertici)
-                {
-                    Punto2DViewModel puntoVM = new Punto2DViewModel(puntoIn);
-                    puntoVM.PropertyChanged += OnEventoModifica;
-                    Vertici.Add(puntoVM);
-                }
+            _sezione.RicalcolaProprietà();
+            
+            if (Vertici == null)
+                Vertici = new ObservableCollection<Punto2DViewModel>();
+                
+            Vertici.Clear();
+            
+            foreach (var puntoIn in _sezione.Vertici)
+            {
+                var puntoVM = new Punto2DViewModel(puntoIn);
+                puntoVM.PropertyChanged += OnEventoModifica;
+                Vertici.Add(puntoVM);
             }
+
             RaisePropertyChangedEvent("Vertici");
             RaisePropertyChangedEvent("Area");
             RaisePropertyChangedEvent("BaricentroVM");
         }
 
-        public void OnEventoModifica(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Gestisce l'evento di modifica delle proprietà
+        /// </summary>
+        private void OnEventoModifica(object sender, PropertyChangedEventArgs e)
         {
             AggiornaProprietà();
         }
