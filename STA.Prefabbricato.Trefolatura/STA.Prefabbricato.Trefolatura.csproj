@@ -1,103 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{04765C4F-909E-4597-8FA0-701C49FC8048}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
     <RootNamespace>STA.Prefabbricato.Trefolatura</RootNamespace>
     <AssemblyName>STA.Prefabbricato.Trefolatura</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\Geometria\STA.Geometria.csproj" />
+    <ProjectReference Include="..\STA.Common\STA.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClasseGestioneTrefolatura.cs" />
-    <Compile Include="ClasseGestioneTrefolo.cs" />
-    <Compile Include="Commands\AggiungiTrefolaturaCommand.cs" />
-    <Compile Include="Commands\AggiungiTrefoloCommand.cs" />
-    <Compile Include="Commands\EliminaTrefoloCommand.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ClasseGestioneElencoTrefolatureViewModel.cs" />
-    <Compile Include="ViewModels\ClasseGestioneTrefolaturaViewModel.cs" />
-    <Compile Include="ViewModels\ClasseGestioneTrefoloViewModel.cs" />
-    <Compile Include="Views\ClasseGestioneTrefolaturaWorkSpaceView.xaml.cs">
-      <DependentUpon>ClasseGestioneTrefolaturaWorkSpaceView.xaml</DependentUpon>
-    </Compile>
+    <Page Include="Views\ClasseGestioneTrefolaturaWorkSpaceView.xaml" />
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\ClasseGestioneTrefolaturaWorkSpaceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Geometria\STA.Geometria.csproj">
-      <Project>{A6A88A15-37EE-46A2-B502-1E0AED53154A}</Project>
-      <Name>STA.Geometria</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\STA.Common\STA.Common.csproj">
-      <Project>{D6F9D0AB-E340-4E63-81E8-FB7B4AE238D8}</Project>
-      <Name>STA.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

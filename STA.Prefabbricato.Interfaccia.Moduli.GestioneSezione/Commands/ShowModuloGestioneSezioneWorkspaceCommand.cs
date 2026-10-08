@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
+using Prism.Events;
+using Prism.Regions;
+using Prism.Ioc;
 
 using STA.Interfaccia.Common.Events;
 
@@ -38,7 +38,7 @@ namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneSezione.Commands
 
         public void Execute(object parameter)
         {
-            var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
+            var regionManager = Prism.Ioc.ContainerLocator.Container.Resolve<IRegionManager>();
 
             SezioneEditView vista = new SezioneEditView();
 
@@ -56,7 +56,7 @@ namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneSezione.Commands
             if (result.Result != true) return;
 
             // Publish ViewRequestedEvent
-            var eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            var eventAggregator = Prism.Ioc.ContainerLocator.Container.Resolve<IEventAggregator>();
             var navigationCompletedEvent = eventAggregator.GetEvent<NavigationCompletedEvent>();
             navigationCompletedEvent.Publish("ModuloGestioneTrefolatura");
         }

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
+using Prism.Events;
+using Prism.Regions;
+using Prism.Ioc;
 using STA.Interfaccia.Common.BaseClasses;
 using STA.Interfaccia.Common.Events;
 using STA.Modules.CaricoVento.Commands;
@@ -106,8 +106,8 @@ namespace STA.Modules.CaricoVento.ViewModels
             // Initialize administrative properties
             this.IsChecked = false;
 
-            // Subscribe to Composite Presentation Events
-            var eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            // Subscribe to Composite Presentation Events via container
+            var eventAggregator = Prism.Ioc.ContainerLocator.Container.Resolve<IEventAggregator>();
             var navigationCompletedEvent = eventAggregator.GetEvent<NavigationCompletedEvent>();
             navigationCompletedEvent.Subscribe(OnNavigationCompleted, ThreadOption.UIThread);
         }

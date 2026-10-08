@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using Microsoft.Practices.Prism;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
+using Prism.Events;
+using Prism.Regions;
+using Prism.Ioc;
 
 using STA.Interfaccia.Common.Events;
 
@@ -46,7 +45,8 @@ namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneTrefolatura.Commands
             {
                 //MessageBox.Show("Scelta la trefolatura: " + ModuloGestioneTraveIsostatica.traveIsostaticaViewModel.TrefolatureVM.Trefolature.Count.ToString());
 
-                var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
+                // Resolve region manager from the container via ServiceLocator replacement
+                var regionManager = Prism.Ioc.ContainerLocator.Container.Resolve<IRegionManager>();
 
                 
 
@@ -90,7 +90,7 @@ namespace STA.Prefabbricato.Interfaccia.Moduli.GestioneTrefolatura.Commands
             if (result.Result != true) return;
 
             // Publish ViewRequestedEvent
-            var eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            var eventAggregator = Prism.Ioc.ContainerLocator.Container.Resolve<IEventAggregator>();
             var navigationCompletedEvent = eventAggregator.GetEvent<NavigationCompletedEvent>();
             navigationCompletedEvent.Publish("ModuloGestioneTrefolatura");
 

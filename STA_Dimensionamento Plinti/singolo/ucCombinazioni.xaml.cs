@@ -55,7 +55,11 @@ namespace STA_Dimensionamento_Plinti
 
         private void btCalcola_Click(object sender, RoutedEventArgs e)
         {
-
+            if (plintoCalc == null)
+            {
+                System.Windows.MessageBox.Show("Prima di calcolare, creare e validare il plinto.");
+                return;
+            }
 
             foreach (Reazione reaCheck in reazioniCalcolo)
             {

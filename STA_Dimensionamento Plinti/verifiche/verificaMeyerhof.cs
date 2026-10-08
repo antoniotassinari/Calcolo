@@ -61,6 +61,15 @@ namespace STA_Dimensionamento_Plinti.verifiche
         /// <param name="plinto">Istanza di classe Plinto per fornire le caratteristiche</param>
         public verificaMeyerhof(Reazione rea, Plinto pli)
         {
+            if (pli == null)
+            {
+                throw new System.ArgumentNullException("pli");
+            }
+            if (rea == null)
+            {
+                throw new System.ArgumentNullException("rea");
+            }
+
             sValoreLimite = pli.ValoreLimite;
             sEy = Math.Abs(rea.MX + rea.FZ * pli.EccentricitaPilastro.Y / 100)  * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
             sEx = Math.Abs(rea.MY + rea.FZ * pli.EccentricitaPilastro.X / 100) * 100 * 100 / (pli.PesoTotale() + rea.FZ * 100);
