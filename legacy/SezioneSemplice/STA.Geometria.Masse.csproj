@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>STA.Geometria.Masse</RootNamespace>
+    <AssemblyName>Sezione</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Geometria\STA.Geometria.csproj" />
+    <ProjectReference Include="..\STA.Common\STA.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup><ProjectReference Include="../../src/STA.Geometria.Masse.Core/STA.Geometria.Masse.Core.csproj" /></ItemGroup>
+</Project>

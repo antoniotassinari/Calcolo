@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><Nullable>disable</Nullable></PropertyGroup>
+
+<ItemGroup><ProjectReference Include="../STA.Calcolo.Contracts/STA.Calcolo.Contracts.csproj" /></ItemGroup></Project>

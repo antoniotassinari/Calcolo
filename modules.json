@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "modules": [
+    {
+      "id": "STA.Calcolo.Contracts",
+      "project": "src/STA.Calcolo.Contracts/STA.Calcolo.Contracts.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Calcolo.IO",
+      "project": "src/STA.Calcolo.IO/STA.Calcolo.IO.csproj",
+      "dependencies": [
+        "STA.Plinti.Core"
+      ]
+    },
+    {
+      "id": "STA.Carichi.Neve.Core",
+      "project": "src/STA.Carichi.Neve.Core/STA.Carichi.Neve.Core.csproj",
+      "dependencies": [
+        "STA.Common.Core"
+      ]
+    },
+    {
+      "id": "STA.Carichi.Sisma.Core",
+      "project": "src/STA.Carichi.Sisma.Core/STA.Carichi.Sisma.Core.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Carichi.Vento.Core",
+      "project": "src/STA.Carichi.Vento.Core/STA.Carichi.Vento.Core.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Common.Core",
+      "project": "src/STA.Common.Core/STA.Common.Core.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Geometria.Core",
+      "project": "src/STA.Geometria.Core/STA.Geometria.Core.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Geometria.Masse.Core",
+      "project": "src/STA.Geometria.Masse.Core/STA.Geometria.Masse.Core.csproj",
+      "dependencies": [
+        "STA.Geometria.Core"
+      ]
+    },
+    {
+      "id": "STA.Integrations.Midas",
+      "project": "src/STA.Integrations.Midas/STA.Integrations.Midas.csproj",
+      "dependencies": [
+        "STA.Calcolo.Contracts"
+      ]
+    },
+    {
+      "id": "STA.Materiali",
+      "project": "src/STA.Materiali/STA.Materiali.csproj",
+      "dependencies": []
+    },
+    {
+      "id": "STA.Plinti.Core",
+      "project": "src/STA.Plinti.Core/STA.Plinti.Core.csproj",
+      "dependencies": [
+        "STA.Calcolo.Contracts"
+      ]
+    },
+    {
+      "id": "STA.Prefabbricato.Trave.Core",
+      "project": "src/STA.Prefabbricato.Trave.Core/STA.Prefabbricato.Trave.Core.csproj",
+      "dependencies": [
+        "STA.Geometria.Core",
+        "STA.Geometria.Masse.Core",
+        "STA.Prefabbricato.Trefolatura.Core"
+      ]
+    },
+    {
+      "id": "STA.Prefabbricato.Trefolatura.Core",
+      "project": "src/STA.Prefabbricato.Trefolatura.Core/STA.Prefabbricato.Trefolatura.Core.csproj",
+      "dependencies": [
+        "STA.Geometria.Core"
+      ]
+    }
+  ]
+}

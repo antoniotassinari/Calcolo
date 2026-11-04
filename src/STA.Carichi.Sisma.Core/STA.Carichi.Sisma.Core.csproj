@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><Nullable>disable</Nullable></PropertyGroup>
+
+<ItemGroup><EmbeddedResource Include="TabellaParametriSpettrali.csv" LogicalName="STA.Carichi.Sisma.TabellaParametriSpettrali.csv" /></ItemGroup></Project>

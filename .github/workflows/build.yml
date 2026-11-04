@@ -1,0 +1,49 @@
+name: Build e test moduli
+on:
+  push:
+    branches: [master, 'refactor/**']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Architettura e riferimenti
+        run: node tools/verify-architecture.mjs
+      - name: Compila soluzione
+        run: dotnet build Calcolo.sln -c Release --nologo
+      - name: Test C# e integrazione simulata
+        run: dotnet tests/STA.Calcolo.Tests/bin/Release/net10.0/STA.Calcolo.Tests.dll
+      - name: Test prototipo recuperato
+        run: node --test archive/midas-plinti-web/tests/api.test.js archive/midas-plinti-web/tests/engine.test.js
+      - name: Parita motore C# e prototipo
+        run: node tools/verify-reference.mjs
+      - name: Smoke WPF
+        run: dotnet tests/STA.Desktop.Smoke/bin/Release/net10.0-windows/STA.Desktop.Smoke.dll
+      - name: Pacchetto desktop
+        run: dotnet publish apps/STA.Calcolo.Desktop -c Release --no-restore -o artifacts/desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: STA-Calcolo-Desktop
+          path: artifacts/desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WPF-smoke
+          path: artifacts/desktop-smoke.png
+  portable:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Librerie e test su Linux
+        run: dotnet run --project tests/STA.Calcolo.Tests -c Release

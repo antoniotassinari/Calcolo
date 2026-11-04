@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>STA.Common</RootNamespace>
+    <AssemblyName>STA.Common</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <!-- Project is a shared library used by WPF apps; keep references as project references in consuming projects -->
+  <ItemGroup><ProjectReference Include="../../src/STA.Common.Core/STA.Common.Core.csproj" /></ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Vento</RootNamespace>
+    <AssemblyName>Vento</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup><ProjectReference Include="../../src/STA.Carichi.Vento.Core/STA.Carichi.Vento.Core.csproj" /></ItemGroup>
+</Project>

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+ <ItemGroup>
+  <ProjectReference Include="../../src/STA.Calcolo.IO/STA.Calcolo.IO.csproj" />
+  <ProjectReference Include="../../src/STA.Integrations.Midas/STA.Integrations.Midas.csproj" />
+  <ProjectReference Include="../../src/STA.Geometria.Masse.Core/STA.Geometria.Masse.Core.csproj" />
+  <ProjectReference Include="../../src/STA.Carichi.Sisma.Core/STA.Carichi.Sisma.Core.csproj" />
+  <ProjectReference Include="../../src/STA.Materiali/STA.Materiali.csproj" />
+ </ItemGroup>
+ <ItemGroup><Content Include="../../examples/plinti-example.json" Link="plinti-example.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF><UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>STA.Carichi.Sisma</RootNamespace>
+    <AssemblyName>STA.Carichi.Sisma</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\STA.Common\STA.Common.csproj" />
+    <ProjectReference Include="..\STA.Grafica\STA.Grafica.csproj" />
+  </ItemGroup>
+  <ItemGroup><ProjectReference Include="../../src/STA.Carichi.Sisma.Core/STA.Carichi.Sisma.Core.csproj" /></ItemGroup>
+</Project>

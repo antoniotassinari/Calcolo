@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF></PropertyGroup>
+ <ItemGroup><ProjectReference Include="../../src/STA.Calcolo.IO/STA.Calcolo.IO.csproj" /><ProjectReference Include="../../src/STA.Integrations.Midas/STA.Integrations.Midas.csproj" /></ItemGroup>
+ <ItemGroup><Content Include="../../examples/plinti-example.json" Link="plinti-example.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>
