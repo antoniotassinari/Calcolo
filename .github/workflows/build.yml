@@ -22,6 +22,8 @@ jobs:
         run: dotnet build Calcolo.sln -c Release --nologo
       - name: Test C# e integrazione simulata
         run: dotnet tests/STA.Calcolo.Tests/bin/Release/net10.0/STA.Calcolo.Tests.dll
+      - name: Parità murature e cerchiature
+        run: dotnet tests/STA.Muratura.Tests/bin/Release/net10.0/STA.Muratura.Tests.dll
       - name: Test aggiornamenti
         run: dotnet tests/STA.Updates.Tests/bin/Release/net10.0/STA.Updates.Tests.dll
       - name: Test prototipo recuperato
@@ -51,3 +53,5 @@ jobs:
         run: dotnet run --project tests/STA.Calcolo.Tests -c Release
       - name: Test aggiornamenti portabili
         run: dotnet run --project tests/STA.Updates.Tests -c Release
+      - name: Muratura portabile
+        run: dotnet run --project tests/STA.Muratura.Tests -c Release

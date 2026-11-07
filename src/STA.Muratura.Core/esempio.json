@@ -1,0 +1,149 @@
+{
+  "before": [
+    {
+      "h": 340,
+      "l": 470,
+      "t": 20,
+      "N": 50,
+      "E": 1500,
+      "G": 500,
+      "rho": 1800,
+      "lc": "LC1",
+      "type": "Muratura in blocchi pieni e malta cementizia",
+      "cracked": false,
+      "c": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "fmBase": 260,
+      "tauBase": 5,
+      "materialId": "custom",
+      "materialVersion": 2
+    },
+    {
+      "h": 340,
+      "l": 450,
+      "t": 45,
+      "N": 50,
+      "E": 1500,
+      "G": 500,
+      "rho": 1800,
+      "lc": "LC1",
+      "type": "Muratura in blocchi pieni e malta cementizia",
+      "cracked": false,
+      "c": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "fmBase": 260,
+      "tauBase": 5,
+      "materialId": "custom",
+      "materialVersion": 2
+    }
+  ],
+  "after": [
+    {
+      "h": 340,
+      "l": 340,
+      "t": 20,
+      "N": 25,
+      "E": 1500,
+      "G": 500,
+      "rho": 1800,
+      "lc": "LC1",
+      "type": "Muratura in blocchi pieni e malta cementizia",
+      "cracked": false,
+      "c": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "fmBase": 260,
+      "tauBase": 5,
+      "materialId": "custom",
+      "materialVersion": 2
+    },
+    {
+      "h": 340,
+      "l": 145,
+      "t": 20,
+      "N": 25,
+      "E": 1500,
+      "G": 500,
+      "rho": 1800,
+      "lc": "LC1",
+      "type": "Muratura in blocchi pieni e malta cementizia",
+      "cracked": false,
+      "c": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "fmBase": 260,
+      "tauBase": 5,
+      "materialId": "custom",
+      "materialVersion": 2
+    },
+    {
+      "h": 340,
+      "l": 450,
+      "t": 45,
+      "N": 50,
+      "E": 1111.111111111111,
+      "G": 370.3703703703703,
+      "rho": 1800,
+      "lc": "LC1",
+      "type": "Muratura in blocchi pieni e malta cementizia",
+      "cracked": false,
+      "c": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "fmBase": 260,
+      "tauBase": 5,
+      "materialId": "custom",
+      "materialVersion": 2
+    }
+  ],
+  "title": "Esempio Excel originale",
+  "version": 2,
+  "settings": {
+    "type": "mattoni-calce",
+    "lc": "LC1"
+  },
+  "frame": {
+    "enabled": true,
+    "profile": "HEA 180",
+    "catalogVersion": "oppo-2026-11-06",
+    "fy": 275,
+    "gamma": 1.05,
+    "h": 150,
+    "E": 2100000,
+    "nProfiles": 1,
+    "nColumns": 2,
+    "portal": "closed"
+  }
+}

@@ -5,7 +5,7 @@ Generato da `node tools/update-catalog.mjs`. La compilazione principale comprend
 | Progetto | Percorso | Dipendenze interne |
 | --- | --- | --- |
 | STA.Calcolo.Cli | apps/STA.Calcolo.Cli/STA.Calcolo.Cli.csproj | STA.Calcolo.IO, STA.Calcolo.Application |
-| STA.Calcolo.Desktop | apps/STA.Calcolo.Desktop/STA.Calcolo.Desktop.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Calcolo.Application, STA.Calcolo.Updates.Core |
+| STA.Calcolo.Desktop | apps/STA.Calcolo.Desktop/STA.Calcolo.Desktop.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Calcolo.Application, STA.Calcolo.Updates.Core, STA.Muratura.Core |
 | STA.Calcolo.Updater | apps/STA.Calcolo.Updater/STA.Calcolo.Updater.csproj | STA.Calcolo.Updates.Core |
 | Acciai | legacy/Acciai/Acciai.csproj | Calcestruzzo, STA.Materiali |
 | Calcestruzzo | legacy/Calcestruzzo/Calcestruzzo.csproj | STA.Materiali |
@@ -47,10 +47,13 @@ Generato da `node tools/update-catalog.mjs`. La compilazione principale comprend
 | STA.Geometria.Masse.Core | src/STA.Geometria.Masse.Core/STA.Geometria.Masse.Core.csproj | STA.Geometria.Core |
 | STA.Integrations.Midas | src/STA.Integrations.Midas/STA.Integrations.Midas.csproj | STA.Calcolo.Contracts |
 | STA.Materiali | src/STA.Materiali/STA.Materiali.csproj | — |
+| STA.Muratura.Core | src/STA.Muratura.Core/STA.Muratura.Core.csproj | STA.Materiali, STA.Profilati.Core |
 | STA.Plinti.Core | src/STA.Plinti.Core/STA.Plinti.Core.csproj | STA.Calcolo.Contracts |
 | STA.Plinti.Storici.Core | src/STA.Plinti.Storici.Core/STA.Plinti.Storici.Core.csproj | STA.Geometria.Core |
 | STA.Prefabbricato.Trave.Core | src/STA.Prefabbricato.Trave.Core/STA.Prefabbricato.Trave.Core.csproj | STA.Geometria.Core, STA.Geometria.Masse.Core, STA.Prefabbricato.Trefolatura.Core |
 | STA.Prefabbricato.Trefolatura.Core | src/STA.Prefabbricato.Trefolatura.Core/STA.Prefabbricato.Trefolatura.Core.csproj | STA.Geometria.Core |
+| STA.Profilati.Core | src/STA.Profilati.Core/STA.Profilati.Core.csproj | — |
 | STA.Calcolo.Tests | tests/STA.Calcolo.Tests/STA.Calcolo.Tests.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Geometria.Masse.Core, STA.Carichi.Sisma.Core, STA.Materiali, STA.Calcolo.Application |
 | STA.Desktop.Smoke | tests/STA.Desktop.Smoke/STA.Desktop.Smoke.csproj | STA.Calcolo.Desktop |
+| STA.Muratura.Tests | tests/STA.Muratura.Tests/STA.Muratura.Tests.csproj | STA.Muratura.Core |
 | STA.Updates.Tests | tests/STA.Updates.Tests/STA.Updates.Tests.csproj | STA.Calcolo.Updates.Core |

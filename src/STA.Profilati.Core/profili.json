@@ -1,0 +1,630 @@
+{
+  "version": "oppo-2026-11-06",
+  "units": {
+    "h": "mm",
+    "Jx": "cm4",
+    "Wx": "cm3"
+  },
+  "sources": [
+    {
+      "family": "HEA",
+      "url": "https://www.oppo.it/tabelle/profilati_hea.htm",
+      "accessed": "2026-11-06",
+      "sha256": "20d319cddc2648a6746c516cd04c01233d26153af11469bb7185ee809804d9e3",
+      "count": 24,
+      "note": "OPPO: dati indicativi, senza data di revisione dichiarata; UNI 5398-78 IPE, UNI 5397-78 HEA/HEB."
+    },
+    {
+      "family": "HEB",
+      "url": "https://www.oppo.it/tabelle/profilati_heb.htm",
+      "accessed": "2026-11-06",
+      "sha256": "69687fa5d5acd5188da5f1252998167345519eb3e0696cef9d8d360436a31db0",
+      "count": 24,
+      "note": "OPPO: dati indicativi, senza data di revisione dichiarata; UNI 5398-78 IPE, UNI 5397-78 HEA/HEB."
+    },
+    {
+      "family": "IPE",
+      "url": "https://www.oppo.it/tabelle/profilati_ipe.htm",
+      "accessed": "2026-11-06",
+      "sha256": "8dfcc0264a4ed9a0cfb96f8887ccaeaa1c44ad70746b4626ac8fb838390fd243",
+      "count": 18,
+      "note": "OPPO: dati indicativi, senza data di revisione dichiarata; UNI 5398-78 IPE, UNI 5397-78 HEA/HEB."
+    }
+  ],
+  "profiles": [
+    {
+      "id": "HEA 100",
+      "family": "HEA",
+      "size": 100,
+      "h": 96,
+      "Jx": 349.2,
+      "Wx": 72.76,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 120",
+      "family": "HEA",
+      "size": 120,
+      "h": 114,
+      "Jx": 606.2,
+      "Wx": 106.3,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 140",
+      "family": "HEA",
+      "size": 140,
+      "h": 133,
+      "Jx": 1033,
+      "Wx": 155.4,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 160",
+      "family": "HEA",
+      "size": 160,
+      "h": 152,
+      "Jx": 1673,
+      "Wx": 220.1,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 180",
+      "family": "HEA",
+      "size": 180,
+      "h": 171,
+      "Jx": 2510,
+      "Wx": 293.6,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 200",
+      "family": "HEA",
+      "size": 200,
+      "h": 190,
+      "Jx": 3692,
+      "Wx": 388.6,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 220",
+      "family": "HEA",
+      "size": 220,
+      "h": 210,
+      "Jx": 5410,
+      "Wx": 515.2,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 240",
+      "family": "HEA",
+      "size": 240,
+      "h": 230,
+      "Jx": 7763,
+      "Wx": 675.1,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 260",
+      "family": "HEA",
+      "size": 260,
+      "h": 250,
+      "Jx": 10450,
+      "Wx": 836.4,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 280",
+      "family": "HEA",
+      "size": 280,
+      "h": 270,
+      "Jx": 13670,
+      "Wx": 1013,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 300",
+      "family": "HEA",
+      "size": 300,
+      "h": 290,
+      "Jx": 18260,
+      "Wx": 1260,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 320",
+      "family": "HEA",
+      "size": 320,
+      "h": 310,
+      "Jx": 22930,
+      "Wx": 1479,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 340",
+      "family": "HEA",
+      "size": 340,
+      "h": 330,
+      "Jx": 27690,
+      "Wx": 1678,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 360",
+      "family": "HEA",
+      "size": 360,
+      "h": 350,
+      "Jx": 33090,
+      "Wx": 1891,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 400",
+      "family": "HEA",
+      "size": 400,
+      "h": 390,
+      "Jx": 45070,
+      "Wx": 2311,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 450",
+      "family": "HEA",
+      "size": 450,
+      "h": 440,
+      "Jx": 63720,
+      "Wx": 2896,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 500",
+      "family": "HEA",
+      "size": 500,
+      "h": 490,
+      "Jx": 86970,
+      "Wx": 3550,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 550",
+      "family": "HEA",
+      "size": 550,
+      "h": 540,
+      "Jx": 111900,
+      "Wx": 4146,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 600",
+      "family": "HEA",
+      "size": 600,
+      "h": 590,
+      "Jx": 141200,
+      "Wx": 4787,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 650",
+      "family": "HEA",
+      "size": 650,
+      "h": 640,
+      "Jx": 175200,
+      "Wx": 5474,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 700",
+      "family": "HEA",
+      "size": 700,
+      "h": 690,
+      "Jx": 215300,
+      "Wx": 6241,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 800",
+      "family": "HEA",
+      "size": 800,
+      "h": 790,
+      "Jx": 303400,
+      "Wx": 7682,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 900",
+      "family": "HEA",
+      "size": 900,
+      "h": 890,
+      "Jx": 422100,
+      "Wx": 9485,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEA 1000",
+      "family": "HEA",
+      "size": 1000,
+      "h": 990,
+      "Jx": 553800,
+      "Wx": 11190,
+      "source": "https://www.oppo.it/tabelle/profilati_hea.htm"
+    },
+    {
+      "id": "HEB 100",
+      "family": "HEB",
+      "size": 100,
+      "h": 100,
+      "Jx": 449.5,
+      "Wx": 89.91,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 120",
+      "family": "HEB",
+      "size": 120,
+      "h": 120,
+      "Jx": 864.4,
+      "Wx": 144.1,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 140",
+      "family": "HEB",
+      "size": 140,
+      "h": 140,
+      "Jx": 1509,
+      "Wx": 215.6,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 160",
+      "family": "HEB",
+      "size": 160,
+      "h": 160,
+      "Jx": 2492,
+      "Wx": 311.5,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 180",
+      "family": "HEB",
+      "size": 180,
+      "h": 180,
+      "Jx": 3831,
+      "Wx": 425.7,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 200",
+      "family": "HEB",
+      "size": 200,
+      "h": 200,
+      "Jx": 5696,
+      "Wx": 569.6,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 220",
+      "family": "HEB",
+      "size": 220,
+      "h": 220,
+      "Jx": 8091,
+      "Wx": 735.5,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 240",
+      "family": "HEB",
+      "size": 240,
+      "h": 240,
+      "Jx": 11260,
+      "Wx": 938.3,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 260",
+      "family": "HEB",
+      "size": 260,
+      "h": 260,
+      "Jx": 14920,
+      "Wx": 1148,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 280",
+      "family": "HEB",
+      "size": 280,
+      "h": 280,
+      "Jx": 19270,
+      "Wx": 1376,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 300",
+      "family": "HEB",
+      "size": 300,
+      "h": 300,
+      "Jx": 25170,
+      "Wx": 1678,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 320",
+      "family": "HEB",
+      "size": 320,
+      "h": 320,
+      "Jx": 30820,
+      "Wx": 1926,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 340",
+      "family": "HEB",
+      "size": 340,
+      "h": 340,
+      "Jx": 36660,
+      "Wx": 2156,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 360",
+      "family": "HEB",
+      "size": 360,
+      "h": 360,
+      "Jx": 43190,
+      "Wx": 2400,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 400",
+      "family": "HEB",
+      "size": 400,
+      "h": 400,
+      "Jx": 57680,
+      "Wx": 2884,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 450",
+      "family": "HEB",
+      "size": 450,
+      "h": 450,
+      "Jx": 79890,
+      "Wx": 3551,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 500",
+      "family": "HEB",
+      "size": 500,
+      "h": 500,
+      "Jx": 107200,
+      "Wx": 4287,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 550",
+      "family": "HEB",
+      "size": 550,
+      "h": 550,
+      "Jx": 136700,
+      "Wx": 4971,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 600",
+      "family": "HEB",
+      "size": 600,
+      "h": 600,
+      "Jx": 171000,
+      "Wx": 5701,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 650",
+      "family": "HEB",
+      "size": 650,
+      "h": 650,
+      "Jx": 210600,
+      "Wx": 6480,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 700",
+      "family": "HEB",
+      "size": 700,
+      "h": 700,
+      "Jx": 256900,
+      "Wx": 7340,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 800",
+      "family": "HEB",
+      "size": 800,
+      "h": 800,
+      "Jx": 359100,
+      "Wx": 8977,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 900",
+      "family": "HEB",
+      "size": 900,
+      "h": 900,
+      "Jx": 494100,
+      "Wx": 10980,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "HEB 1000",
+      "family": "HEB",
+      "size": 1000,
+      "h": 1000,
+      "Jx": 644700,
+      "Wx": 12890,
+      "source": "https://www.oppo.it/tabelle/profilati_heb.htm"
+    },
+    {
+      "id": "IPE 80",
+      "family": "IPE",
+      "size": 80,
+      "h": 80,
+      "Jx": 80.14,
+      "Wx": 20.03,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 100",
+      "family": "IPE",
+      "size": 100,
+      "h": 100,
+      "Jx": 171,
+      "Wx": 34.2,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 120",
+      "family": "IPE",
+      "size": 120,
+      "h": 120,
+      "Jx": 317.8,
+      "Wx": 52.96,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 140",
+      "family": "IPE",
+      "size": 140,
+      "h": 140,
+      "Jx": 541.2,
+      "Wx": 77.32,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 160",
+      "family": "IPE",
+      "size": 160,
+      "h": 160,
+      "Jx": 869.3,
+      "Wx": 108.7,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 180",
+      "family": "IPE",
+      "size": 180,
+      "h": 180,
+      "Jx": 1317,
+      "Wx": 146.3,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 200",
+      "family": "IPE",
+      "size": 200,
+      "h": 200,
+      "Jx": 1943,
+      "Wx": 194.3,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 220",
+      "family": "IPE",
+      "size": 220,
+      "h": 220,
+      "Jx": 2772,
+      "Wx": 252,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 240",
+      "family": "IPE",
+      "size": 240,
+      "h": 240,
+      "Jx": 3892,
+      "Wx": 324.3,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 270",
+      "family": "IPE",
+      "size": 270,
+      "h": 270,
+      "Jx": 5790,
+      "Wx": 428.9,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 300",
+      "family": "IPE",
+      "size": 300,
+      "h": 300,
+      "Jx": 8356,
+      "Wx": 557.1,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 330",
+      "family": "IPE",
+      "size": 330,
+      "h": 330,
+      "Jx": 11770,
+      "Wx": 713.1,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 360",
+      "family": "IPE",
+      "size": 360,
+      "h": 360,
+      "Jx": 16270,
+      "Wx": 903.6,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 400",
+      "family": "IPE",
+      "size": 400,
+      "h": 400,
+      "Jx": 23130,
+      "Wx": 1156,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 450",
+      "family": "IPE",
+      "size": 450,
+      "h": 450,
+      "Jx": 33740,
+      "Wx": 1500,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 500",
+      "family": "IPE",
+      "size": 500,
+      "h": 500,
+      "Jx": 48200,
+      "Wx": 1928,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 550",
+      "family": "IPE",
+      "size": 550,
+      "h": 550,
+      "Jx": 67120,
+      "Wx": 2441,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    },
+    {
+      "id": "IPE 600",
+      "family": "IPE",
+      "size": 600,
+      "h": 600,
+      "Jx": 92080,
+      "Wx": 3069,
+      "source": "https://www.oppo.it/tabelle/profilati_ipe.htm"
+    }
+  ]
+}

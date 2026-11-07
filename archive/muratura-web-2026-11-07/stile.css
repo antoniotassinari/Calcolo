@@ -1,0 +1,67 @@
+@font-face{font-family:Acherus;src:url('Acherus-Regular.otf')}*{box-sizing:border-box}body{margin:0;background:#f3f6f6;color:#192845;font:15px Acherus,'Segoe UI',sans-serif}header{background:#192845;color:white;display:flex;justify-content:space-between;padding:22px 5%;align-items:center}header small,.brand span{display:block;font-size:10px;letter-spacing:1.5px;margin-top:4px}.brand{font-size:32px;font-weight:bold}main{max-width:1500px;margin:auto;padding:30px}h1{font-size:34px;margin:4px 0 10px}h2{font-size:20px}p{line-height:1.6}.eyebrow{font-size:12px;letter-spacing:2px;color:#135f6e}.heading,.toolbar,.counts{display:flex;gap:16px;align-items:center;justify-content:space-between}.toolbar{justify-content:flex-start;flex-wrap:wrap;margin:20px 0}button,.file{background:#135f6e;color:white;border:1px solid #135f6e;border-radius:3px;padding:11px 16px;cursor:pointer;font:inherit;font-weight:bold}button:hover,.file:hover{background:#192845}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #c3872a;outline-offset:2px}.file input{display:none}.notice{border-left:4px solid #bc8135;background:#fff5e5;padding:16px;margin:20px 0;font-size:14px}.panel,.pier,.metric{background:white;border:1px solid #d6e0e2;border-radius:5px;padding:22px;margin-bottom:20px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.metric h3{font-size:14px;margin-top:0}.metric strong{font-size:26px;display:block;margin:10px 0}.metric small{display:block;color:#526778;line-height:1.7}.bad{color:#a04825}.good{color:#135f6e}.states{display:grid;grid-template-columns:1fr 1fr;gap:24px}.state-title{padding:15px;background:#192845;color:white;border-radius:3px}.state-title.after{background:#135f6e}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#43556a}input,select{width:100%;min-width:0;border:1px solid #b8cdd1;padding:9px;background:#fcfefe;color:#192845;border-radius:3px;font:inherit;font-size:14px}input:invalid{border-color:#b04c2e;background:#fff4ec}.wide{grid-column:1/-1}.check{flex-direction:row;align-items:center;padding:16px 0}.check input{width:auto}.counts{justify-content:flex-start}.counts label{width:220px}summary{cursor:pointer;color:#135f6e;font-weight:bold;padding:12px 0}details .fields{margin:15px 0}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}th{background:#192845;color:white;text-align:left;padding:12px}td{border-bottom:1px solid #e5ecee;padding:12px}tr:nth-child(even){background:#f3f6f6}a{color:#135f6e}footer{padding:20px;text-align:center;color:#617382}#message{font-size:12px}.error{background:#ffece5;padding:20px;color:#8e3517}.pier h3{margin-top:0} @media(max-width:850px){main{padding:16px}.states,.metrics{grid-template-columns:1fr}.heading{align-items:flex-start;flex-direction:column}h1{font-size:28px}.fields{grid-template-columns:repeat(2,1fr)}}@media print{header{background:white;color:#192845}.toolbar,.heading button,.counts{display:none}main{padding:0}.states{display:block}.pier{break-inside:avoid}.metrics{grid-template-columns:repeat(3,1fr)}body{font-size:11px}.fields{grid-template-columns:repeat(4,1fr)}}
+
+/* Disposizione compatta: tutti i maschi prima, poi tutti i maschi dopo. */
+main{max-width:1800px;padding:22px}
+.states{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin:16px 0}
+.states>section{min-width:0;background:#fff;border:1px solid #d6e0e2;border-radius:5px;padding:12px}
+.state-title{margin:0 0 12px;padding:11px 14px;font-size:18px}
+#before,#after{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));gap:10px;align-items:start}
+.pier{min-width:0;padding:12px;margin:0;background:#fcfefe}
+.pier h3{font-size:16px;margin:0 0 10px}
+.pier .fields{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px 8px}
+.pier label{font-size:11px;gap:3px;line-height:1.35}
+.pier input,.pier select{padding:6px 7px;font-size:13px;min-height:31px}
+.pier .fields>label:not(.wide){display:grid;grid-template-rows:30px auto;align-content:start}
+.pier .check{padding:9px 0;gap:6px}
+.pier .check input{min-height:0}
+.pier summary{font-size:12px;padding:8px 0}
+.pier details .fields{margin:6px 0 10px}
+.pier small{font-size:10px;line-height:1.4;display:block}
+.panel,.metric{padding:16px;margin-bottom:14px}
+.metrics{gap:12px}.toolbar{gap:10px;margin:14px 0}.notice{padding:12px;margin:14px 0}
+th,td{padding:9px 10px}
+@media(max-width:600px){main{padding:12px}.states>section{padding:8px}.pier .fields{grid-template-columns:repeat(2,minmax(0,1fr))}.states{gap:12px}.state-title{font-size:16px}.pier{padding:10px}}
+@media print{main{padding:0}.states{display:block}.states>section{margin-bottom:16px;padding:8px;break-inside:auto}#before,#after{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pier{break-inside:avoid}.pier .fields{grid-template-columns:repeat(2,minmax(0,1fr))}.pier label{font-size:9px}.pier input,.pier select{font-size:10px}}
+
+.pier-options{background:#eef5f5;border:1px solid #d6e0e2;border-radius:3px;padding:8px;margin-bottom:10px}.pier-options .check{padding:0 0 8px}.pier-options small{margin-top:6px}
+
+.height-options{display:flex;gap:24px;flex-wrap:wrap}.height-options .check{padding:10px 0}input:disabled{background:#e8eeee;color:#536575;cursor:not-allowed}
+
+/* Fascia richiesta nello screenshot: titolo, azioni, avviso e riepilogo. */
+.sticky-overview{position:sticky;top:0;z-index:20;background:#f3f6f6;padding:8px 0;box-shadow:0 5px 10px #19284512;max-height:45vh;overflow:auto;scrollbar-width:thin;margin-bottom:14px}
+.sticky-overview .heading{gap:10px;align-items:center;flex-direction:row}
+.sticky-overview h1{font-size:24px;margin:0}
+.sticky-overview .eyebrow{display:none}
+.sticky-overview .heading p{font-size:11px;margin:3px 0;line-height:1.3}
+.sticky-overview button,.sticky-overview .file{padding:7px 10px;font-size:12px;white-space:nowrap}
+.sticky-overview .toolbar{margin:7px 0;gap:7px;flex-wrap:nowrap;overflow-x:auto;flex-shrink:0;padding-bottom:2px}
+.sticky-overview #message{font-size:10px;min-width:170px}
+.sticky-overview .notice{font-size:11px;padding:6px 10px;margin:6px 0;line-height:1.3}
+.sticky-overview .metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sticky-overview .metric{padding:9px 12px;margin:0}
+.sticky-overview .metric h3{font-size:12px;margin:0 0 4px}
+.sticky-overview .metric strong{font-size:22px;margin:3px 0}
+.sticky-overview .metric small{font-size:11px;line-height:1.35}
+.sticky-overview .metric p{font-size:11px;margin:4px 0 0;line-height:1.2}
+@media(max-width:600px){.sticky-overview h1{font-size:17px}.sticky-overview .heading p{display:none}.sticky-overview .metrics{grid-template-columns:repeat(3,190px)}.sticky-overview #summary{overflow-x:auto;padding-bottom:4px}.sticky-overview .notice{font-size:10px}.sticky-overview .metric{padding:7px 9px}.sticky-overview .metric strong{font-size:19px}}
+@media print{.sticky-overview{position:static;max-height:none;overflow:visible;box-shadow:none}.sticky-overview .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.sticky-overview #summary{overflow:visible}.sticky-overview .toolbar{display:none}}
+
+/* Parametri ordinati per blocchi come il foglio Excel. */
+input:not([type=checkbox]):not([type=file]):not(:disabled),select{background:#fffed1}
+input:disabled,output{background:#edf1f2;color:#43556a}
+.pier h4{margin:10px 0 7px;padding:5px 7px;background:#eaf0f1;border-top:1px solid #c8d6da;font-size:12px;text-transform:uppercase}
+.pier .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pier>label{margin:6px 0}.pier .material-note{font-size:10px;line-height:1.4;margin:6px 0}
+.pier .readout{font-size:11px;line-height:1.55;padding:6px;background:#f3f6f6;margin-top:7px}
+.pier .material-controls{margin:8px 0}.pier output{padding:6px 7px;display:block;border:1px solid #c8d6da;border-radius:3px;font-size:13px}
+.material-defaults{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.material-defaults label:first-child{flex:1;min-width:220px}.material-defaults label:nth-child(2){min-width:150px}
+.sticky-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:600px){.sticky-overview .metrics{grid-template-columns:repeat(2,190px)}}
+@media print{.material-defaults button{display:none}.sticky-overview .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pier .fields{align-items:end}.pier .fields>label:not(.wide){display:flex;flex-direction:column;gap:3px;align-content:normal}.pier label{gap:3px}.pier .fields{row-gap:8px}
+
+/* Quattro colonne costanti: la quantità di maschi non altera la larghezza. */
+#before,#after{grid-template-columns:repeat(4,minmax(300px,1fr));gap:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:auto;overscroll-behavior-x:contain}
+#before:focus-visible,#after:focus-visible{outline:2px solid #135f6e;outline-offset:3px}
+.grid-help{font-size:11px;line-height:1.4;color:#526778;margin:0 0 8px}
+@media print{#before,#after{grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;gap:5px}.grid-help{display:none}.pier .fields{grid-template-columns:1fr}.pier{padding:6px}}

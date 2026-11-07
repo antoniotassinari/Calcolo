@@ -1,6 +1,6 @@
 # Suite WPF .NET 10 · 7 novembre 2026
 
-La finestra principale apre 11 ambienti di lavoro. Le viste condividono modelli e servizi, non controlli WinForms incorporati. Le finestre già aperte vengono riattivate; chiusura e riapertura nello stesso processo conservano il documento. Salvare in JSON per conservarlo dopo la chiusura dell'applicazione.
+La finestra principale apre 12 ambienti di lavoro. Le viste condividono modelli e servizi, non controlli WinForms incorporati. Le finestre già aperte vengono riattivate; chiusura e riapertura nello stesso processo conservano il documento. Salvare in JSON per conservarlo dopo la chiusura dell'applicazione.
 
 | Interfaccia precedente | Ambiente attuale | Funzioni provate |
 | --- | --- | --- |
@@ -28,8 +28,10 @@ I risultati e i grafici vengono invalidati immediatamente a ogni modifica. L'imp
 
 ## Verifiche e limiti
 
-40 test C# comprendono esempi di tutti gli adattatori in it-IT/en-US, riferimenti di equilibrio indipendenti, input invalidi, contratti e scambio dati travi. Lo smoke WPF verifica apertura degli 11 ambienti, comandi, salvataggio/riapertura, esportazione, importazione/rimozione dei moduli trave, conservazione dello stato, invalidazione e rendering. Restano i 16 test JS e il confronto C#/JS su 9 scenari del motore plinti recuperato.
+40 test C# comprendono esempi di tutti gli adattatori in it-IT/en-US, riferimenti di equilibrio indipendenti, input invalidi, contratti e scambio dati travi. Lo smoke WPF verifica apertura degli 12 ambienti, comandi, salvataggio/riapertura, esportazione, importazione/rimozione dei moduli trave, conservazione dello stato, invalidazione e rendering. Restano i 16 test JS e il confronto C#/JS su 9 scenari del motore plinti recuperato.
 
 L'aggiornamento è tecnologico: le formule storiche non sono state adeguate integralmente alla normativa corrente. Ogni ambiente espone il proprio ambito. Il progetto originale delle travi non contiene un solutore completo: la nuova finestra organizza e controlla sezioni/trefolature, senza presentare una verifica strutturale della trave inesistente. I plinti storici sono controlli parziali; il taglio sui pali è esposto ma non verificato.
 
 Compatibilità da distinguere dalle finestre: vecchi file .staxml, assegnazioni multiple di tipologie di plinto, esportazioni Word COM, esportazioni specifiche Robot/ETABS e integrazione VSTO/Excel non sono riprodotti nella nuova UI. Si usano i nuovi documenti JSON e CSV; non sovrascrivere i file storici. Le vecchie interfacce restano in legacy come riferimento. Le classi plinti estratte sono una copia adattata; per manutenzione del motore attivo usare src/STA.Plinti.Storici.Core, non legacy. Il collegamento MIDAS reale richiede ancora un modello GEN NX e risultati disponibili: i test presenti simulano il servizio HTTP.
+
+Il modulo **Muratura e cerchiatura** (versione 1.1.0) aggiunge confronto prima/dopo, materiali condivisi, catalogo profili separato e ricerca preliminare. [Guida](MURATURA.md). Verificato su 164 casi rispetto al codice web originale.

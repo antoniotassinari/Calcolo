@@ -80,6 +80,14 @@
       "dependencies": []
     },
     {
+      "id": "STA.Muratura.Core",
+      "project": "src/STA.Muratura.Core/STA.Muratura.Core.csproj",
+      "dependencies": [
+        "STA.Materiali",
+        "STA.Profilati.Core"
+      ]
+    },
+    {
       "id": "STA.Plinti.Core",
       "project": "src/STA.Plinti.Core/STA.Plinti.Core.csproj",
       "dependencies": [
@@ -108,6 +116,11 @@
       "dependencies": [
         "STA.Geometria.Core"
       ]
+    },
+    {
+      "id": "STA.Profilati.Core",
+      "project": "src/STA.Profilati.Core/STA.Profilati.Core.csproj",
+      "dependencies": []
     }
   ]
 }

@@ -1,0 +1,5 @@
+const fs=require('fs');const M=require('../archive/muratura-web-2026-11-07/calcoli.js');require('../archive/muratura-web-2026-11-07/profili-oppo.js');const F=require('../archive/muratura-web-2026-11-07/cerchiatura-calcoli.js');const cases=[];
+function add(name,p){const a=M.total(p.before),b=M.total(p.after);cases.push({name,input:p,before:a,after:b,frame:F.calc(p.frame,a,b),design:p.frame?.enabled?F.design(p.frame,a,b):null});}
+for(const m of M.catalog)for(const lc of ['LC1','LC2'])for(const cracked of [false,true]){let p=M.preset(M.pier(),m.id,lc);p.rho??=1400;p.cracked=cracked;p.c=[1.1,1.2,1.05,1.03,.9,1.1,1.2];p.loadMode='linear';p.q=23.5;add(m.id+lc+cracked,{version:2,title:'Parità',before:[p],after:[{...p,l:310,h:450}],frame:F.defaults()});}
+for(const profile of OppoProfiles.profiles)for(const portal of ['closed','open']){let p=M.migrate(M.example());p.frame={...F.defaults(),enabled:true,profile:profile.id,portal};add(profile.id+portal,p);}
+fs.mkdirSync('tests/STA.Muratura.Tests',{recursive:true});fs.writeFileSync('tests/STA.Muratura.Tests/reference.json',JSON.stringify(cases));console.log(cases.length+' casi di riferimento');

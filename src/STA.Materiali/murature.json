@@ -1,0 +1,177 @@
+[
+  {
+    "id": "pietrame",
+    "name": "Pietrame disordinato",
+    "f": [
+      1,
+      2
+    ],
+    "tau": [
+      0.018,
+      0.032
+    ],
+    "E": [
+      690,
+      1050
+    ],
+    "G": [
+      230,
+      350
+    ],
+    "w": 19
+  },
+  {
+    "id": "sbozzati",
+    "name": "Conci sbozzati, paramenti disomogenei",
+    "f": [
+      2,
+      2
+    ],
+    "tau": [
+      0.035,
+      0.051
+    ],
+    "E": [
+      1020,
+      1440
+    ],
+    "G": [
+      340,
+      480
+    ],
+    "w": 20,
+    "note": "Zeppe profonde: eventuale incremento delle resistenze 1,2 da valutare, non applicato automaticamente."
+  },
+  {
+    "id": "spacco",
+    "name": "Pietre a spacco con buona tessitura",
+    "f": [
+      2.6,
+      3.8
+    ],
+    "tau": [
+      0.056,
+      0.074
+    ],
+    "E": [
+      1500,
+      1980
+    ],
+    "G": [
+      500,
+      660
+    ],
+    "w": 21
+  },
+  {
+    "id": "tenera-irregolare",
+    "name": "Pietra tenera irregolare (tufo, calcarenite)",
+    "f": [
+      1.4,
+      2.2
+    ],
+    "tau": [
+      0.028,
+      0.042
+    ],
+    "E": [
+      900,
+      1260
+    ],
+    "G": [
+      300,
+      420
+    ],
+    "w": null,
+    "note": "Peso specifico tabellare 13–16 kN/m³: inserire il valore pertinente (1300–1600 daN/m³)."
+  },
+  {
+    "id": "tenera-regolare",
+    "name": "Conci regolari di pietra tenera",
+    "f": [
+      2,
+      3.2
+    ],
+    "tau": [
+      0.04,
+      0.08
+    ],
+    "E": [
+      1200,
+      1620
+    ],
+    "G": [
+      400,
+      500
+    ],
+    "w": null,
+    "regular": true,
+    "note": "Peso specifico 13–16 kN/m³: inserire il valore pertinente. La scelta del criterio per muratura regolare richiede valutazione specifica."
+  },
+  {
+    "id": "lapidei",
+    "name": "Blocchi lapidei squadrati",
+    "f": [
+      5.8,
+      8.2
+    ],
+    "tau": [
+      0.09,
+      0.12
+    ],
+    "E": [
+      2400,
+      3300
+    ],
+    "G": [
+      800,
+      1100
+    ],
+    "w": 22,
+    "regular": true
+  },
+  {
+    "id": "mattoni-calce",
+    "name": "Mattoni pieni e malta di calce",
+    "f": [
+      2.6,
+      4.3
+    ],
+    "tau": [
+      0.05,
+      0.13
+    ],
+    "E": [
+      1200,
+      1800
+    ],
+    "G": [
+      400,
+      600
+    ],
+    "w": 18,
+    "note": "Giunti >13 mm: valutare riduzione 0,7 delle resistenze e 0,8 dei moduli; non applicata automaticamente."
+  },
+  {
+    "id": "semipieni",
+    "name": "Mattoni semipieni e malta cementizia (foratura ≤40%)",
+    "f": [
+      5,
+      8
+    ],
+    "tau": [
+      0.08,
+      0.17
+    ],
+    "E": [
+      3500,
+      5600
+    ],
+    "G": [
+      875,
+      1400
+    ],
+    "w": 15,
+    "regular": true
+  }
+]

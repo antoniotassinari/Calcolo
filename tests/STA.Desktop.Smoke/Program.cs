@@ -24,6 +24,20 @@ internal static class Program
             vm.Fields[0].Value += " invalid"; if (vm.Results.Count != 0 || vm.ExportCommand.CanExecute(null)) throw new Exception("Stale results: " + module.Id);
             Console.WriteLine("PASS WPF " + module.Id);
         }
+        var masonry=new MasonryViewModel(files);masonry.ExampleCommand.Execute(null);masonry.CalculateCommand.Execute(null);
+        if(masonry.Results.Count==0)throw new Exception(masonry.Status);
+        files.NextSave="masonry.json";masonry.SaveCommand.Execute(null);var masonrySaved=files.Content[files.NextSave];
+        files.NextSave="masonry-report.html";masonry.ReportCommand.Execute(null);if(!files.Content[files.NextSave].Contains("<table>"))throw new Exception("Report missing");
+        masonry.Before[0].Editor.Fields.Single(f=>f.Key=="H").Value="bad";if(masonry.Results.Count>0||masonry.ReportCommand.CanExecute(null))throw new Exception("Stale masonry results");
+        masonry.CalculateCommand.Execute(null);if(masonry.Results.Count>0)throw new Exception("Bad masonry geometry accepted");
+        files.NextOpen="masonry.json";masonry.OpenCommand.Execute(null);if(STA.Muratura.Core.MasonryFiles.Write(masonry.Build())!=masonrySaved)throw new Exception("Masonry round trip");
+        masonry.DesignCommand.Execute(null);if(masonry.Proposals.Count!=3)throw new Exception(masonry.Status);
+        var mw=new MasonryWindow{DataContext=masonry};Render(mw,"muratura");var tabs=(System.Windows.Controls.TabControl)mw.FindName("ModuleTabs");tabs.SelectedIndex=2;Render(mw,"muratura-cerchiatura");tabs.SelectedIndex=3;Render(mw,"muratura-risultati");mw.Close();
+        masonry.SelectedProposal=masonry.Proposals.First(p=>p.Candidate!=null);var chosen=masonry.SelectedProposal.Candidate!.Profile.Id;masonry.UseProfileCommand.Execute(null);if(masonry.Build().Frame.Profile!=chosen||masonry.Results.Count==0)throw new Exception("Apply profile failed");
+        masonry.CopyCommand.Execute(null);if(masonry.Before.Count!=masonry.After.Count)throw new Exception("Copy state");
+        masonry.MaterialId="tenera-irregolare";masonry.ApplyMaterialCommand.Execute(null);masonry.CalculateCommand.Execute(null);if(masonry.Results.Count>0)throw new Exception("Missing density accepted");
+        masonry.MaterialId="mattoni-calce";masonry.ApplyMaterialCommand.Execute(null);masonry.CalculateCommand.Execute(null);if(masonry.Results.Count==0)throw new Exception(masonry.Status);
+        Console.WriteLine("PASS WPF muratura: original JSON, edit invalidation, copy, materials, report, design and rendering");
         var footing = new FootingViewModel(files); footing.ExampleCommand.Execute(null); footing.CalculateCommand.Execute(null);
         if (footing.Results.Length != 1 || !footing.ExportCommand.CanExecute(null)) throw new Exception(footing.Status);
         files.NextSave = "footing.json"; footing.SaveCommand.Execute(null); files.NextSave = "footing-results.json"; footing.ExportCommand.Execute(null);
@@ -40,7 +54,7 @@ internal static class Program
         Render(main, "desktop-smoke"); main.Show();
         foreach (var card in mainVm.Modules) { card.OpenCommand.Execute(null); card.OpenCommand.Execute(null); }
         if (main.OwnedWindows.Count != mainVm.Modules.Count) throw new Exception("Navigation duplicated windows");
-        var sample = main.OwnedWindows.Cast<Window>().First(w => w.DataContext is WorkspaceViewModel); var context = sample.DataContext; sample.Close(); mainVm.Modules[0].OpenCommand.Execute(null); if (!main.OwnedWindows.Cast<Window>().Any(w => ReferenceEquals(w.DataContext, context))) throw new Exception("Reopen lost project");
+        var sample = main.OwnedWindows.Cast<Window>().First(w => w.DataContext is WorkspaceViewModel); var context = sample.DataContext; sample.Close(); mainVm.Modules.Single(m=>m.Title==((WorkspaceViewModel)context).Title).OpenCommand.Execute(null); if (!main.OwnedWindows.Cast<Window>().Any(w => ReferenceEquals(w.DataContext, context))) throw new Exception("Reopen lost project");
         foreach (Window child in main.OwnedWindows.Cast<Window>().ToArray()) child.Close();
         main.Close(); app.Shutdown(); Console.WriteLine("PASS MVVM: navigation, rendering, calculations, invalidation"); return 0;
     }

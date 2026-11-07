@@ -1,0 +1,32 @@
+.frame-inputs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.frame-details{max-width:800px;margin:18px 0}#framePanel .check{align-items:center}#framePanel p{font-size:12px}#frameResults h3{margin-top:22px}@media(max-width:700px){.frame-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{#printReport .frame-report-details{width:65%;margin:3mm 0}#printReport .frame-report-details td{padding:.5mm 1mm}#printReport .frame-report-details td:first-child{width:55%}#printReport .report-page.frame-page p{font-size:7pt;line-height:1.3}#printReport .frame-page>table{font-size:7.5pt}#printReport .frame-page>table td,#printReport .frame-page>table th{padding:1mm}}
+
+
+/* Configurazione compatta in tre righe; anteprima indipendente dai dati salvati. */
+#framePanel .frame-inputs{display:block;max-width:660px;margin:12px 0}
+.frame-input-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:9px;align-items:end}
+#framePanel .frame-input-row label{gap:3px;line-height:1.35}
+#framePanel .frame-input-row input,#framePanel .frame-input-row select,#framePanel .frame-portal select{padding:6px 8px;min-height:33px}
+.frame-profile-row>label{grid-column:span 2}
+#frameDesignButton{min-height:33px;padding:7px 10px;font-size:13px}
+.frame-portal{max-width:280px;margin:10px 0}
+#framePanel .frame-details{max-width:660px;margin:16px 0}
+#framePanel .frame-details td{padding:5px 8px;font-size:12px}
+#frameDesign{max-width:1050px;margin:20px 0}
+#frameDesign h3{font-size:16px;margin:0 0 6px}
+#framePanel .frame-design-rule{margin:0 0 12px}
+.frame-proposals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.frame-proposal{background:#f4f8f8;border:1px solid #c7d9dc;border-top:3px solid #135f6e;border-radius:4px;padding:12px;min-width:0;display:flex;flex-direction:column}
+.frame-proposal h4{margin:0 0 5px;font-size:12px;letter-spacing:1px;color:#526778}
+.frame-proposal>strong{font-size:20px;color:#135f6e}
+.frame-proposal dl{margin:12px 0 0;font-size:12px}
+.frame-proposal dl>div{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid #dbe5e6;flex-wrap:wrap}
+.frame-proposal dt{color:#43556a}.frame-proposal dd{font-weight:bold;margin:0}
+#framePanel .frame-proposal p{font-size:11px;margin:10px 0}
+.frame-proposal button{margin-top:auto;padding:8px 10px;font-size:12px}
+.frame-proposal button:disabled{background:#e0eaea;border-color:#beced0;color:#43556a;cursor:default}
+.frame-proposal.no-solution{border-top-color:#a04825;background:#fff7ef}
+.frame-proposal.no-solution>strong{font-size:17px;color:#a04825}
+#framePanel .frame-design-limit{font-size:11px;color:#526778;line-height:1.45}
+.frame-method{max-width:1050px}
+@media(max-width:700px){.frame-proposals{grid-template-columns:1fr}.frame-input-row{gap:6px}#framePanel .frame-input-row label{font-size:10px}#frameDesignButton{font-size:11px;padding:6px}#framePanel .frame-details td{white-space:normal}}
