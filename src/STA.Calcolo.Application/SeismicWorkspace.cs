@@ -5,7 +5,7 @@ public sealed class SeismicWorkspace : ICalculationWorkspace, IPlotWorkspace
 {
     public string PlotCaption => "Spettri · periodo [s], accelerazione [m/s²]";
     public bool EqualAxes => false;
-    public IReadOnlyList<PlotSeries> Plot(ModuleDocument document, IReadOnlyList<ResultRow> results) => results.Where(r => r.Grandezza.Contains(" · T=")).GroupBy(r => r.Grandezza.Split(' ')[0]).Select(g => new PlotSeries(g.Key, g.Select(r => new PlotPoint(ModuleInput.Number(r.Grandezza.Split("T=")[1].Split(' ')[0]), r.Valore)).ToArray())).ToArray();
+    public IReadOnlyList<PlotSeries> Plot(ModuleDocument document, IReadOnlyList<ResultRow> results) => results.Where(r => r.Grandezza.Contains(" · T=")).GroupBy(r => r.Grandezza.Split(' ')[0]).Select(g => new PlotSeries(g.Key, g.Select(r => new PlotPoint(r.Periodo!.Value, r.Valore)).ToArray())).ToArray();
     public string Id => "sisma";
     public string Title => "Spettri sismici";
     public string Description => "Reticolo e formule del progetto storico. Coordinate in gradi decimali; spettri elastici o SLV di progetto con smorzamento 5%.";
@@ -26,7 +26,7 @@ public sealed class SeismicWorkspace : ICalculationWorkspace, IPlotWorkspace
         {
             result.Add(new($"{s.statoLimite} · ag", s.numAgMedia, "m/s²"));
             result.Add(new($"{s.statoLimite} · Tc", s.numTc, "s"));
-            result.AddRange(s.valoriSpettrali.Where(v => v.periodo <= maxPeriod).Select(v => new ResultRow($"{s.statoLimite} · T={v.periodo.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)} s", i.Text("direzione") == "Orizzontale" ? v.risposta : v.rispostaVert, "m/s²")));
+            result.AddRange(s.valoriSpettrali.Where(v => v.periodo <= maxPeriod).Select(v => new ResultRow($"{s.statoLimite} · T={v.periodo.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)} s", i.Text("direzione") == "Orizzontale" ? v.risposta : v.rispostaVert, "m/s²", v.periodo)));
         }
         if (result.Any(r => !double.IsFinite(r.Valore))) throw new ArgumentException("Coordinate o parametri non supportati dal reticolo storico.");
         return result;

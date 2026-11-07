@@ -19,3 +19,5 @@ L'adattatore MIDAS richiede il Base URL HTTPS da API Settings e la MAPI-Key in m
 I moduli storici adattati usano un documento JSON con proprietà camelCase: schemaVersion (1), module (identificativo nel catalogo applicativo), fields (dizionario chiave/valore testuale), data (righe delimitate da punto e virgola, quando previste). Esempio in examples/sezione.json. Le chiavi ammesse e le unità sono definite dai ModuleField del servizio applicativo. Le letture rifiutano proprietà JSON sconosciute, moduli errati e versioni non supportate. I parametri numerici accettano punto o virgola decimale, senza separatore delle migliaia.
 
 BeamProject usa schemaVersion, name, sections e tendons: gli ultimi due sono array di documenti modulo completi. ModuleFiles è l'unico serializzatore di questi contratti; BeamProjectService ricostruisce le classi geometriche e i trefoli. I progetti plinti/MIDAS mantengono il contratto precedente, senza cambiamenti.
+
+Nei risultati sismici il campo numerico periodo conserva la precisione originale del campionamento. La descrizione visibile arrotonda solo il testo: grafici ed esportazione usano il periodo numerico.
