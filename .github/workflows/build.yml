@@ -22,6 +22,8 @@ jobs:
         run: dotnet build Calcolo.sln -c Release --nologo
       - name: Test C# e integrazione simulata
         run: dotnet tests/STA.Calcolo.Tests/bin/Release/net10.0/STA.Calcolo.Tests.dll
+      - name: Test aggiornamenti
+        run: dotnet tests/STA.Updates.Tests/bin/Release/net10.0/STA.Updates.Tests.dll
       - name: Test prototipo recuperato
         run: node --test archive/midas-plinti-web/tests/api.test.js archive/midas-plinti-web/tests/engine.test.js
       - name: Parita motore C# e prototipo
@@ -47,3 +49,5 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Librerie e test su Linux
         run: dotnet run --project tests/STA.Calcolo.Tests -c Release
+      - name: Test aggiornamenti portabili
+        run: dotnet run --project tests/STA.Updates.Tests -c Release

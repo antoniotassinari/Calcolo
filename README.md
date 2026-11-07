@@ -2,7 +2,11 @@
 
 Librerie C# .NET 10 riutilizzabili per calcolo strutturale, con applicazione WPF e interfaccia a riga di comando. Il modulo plinti importa reazioni da CSV, JSON o API MIDAS GEN NX e usa un solo motore di calcolo.
 
-## Avvio
+## Installazione Windows
+
+Scaricare il setup dalla [release più recente](https://github.com/studiotassinari/Calcolo/releases/latest). Include il runtime .NET e aggiorna automaticamente i file tramite GitHub, con backup e ripristino, prima di aprire i progetti. [Istruzioni](deployment/INSTALLAZIONE.md).
+
+## Avvio per sviluppatori
 
 Prerequisiti: SDK .NET 10; Windows per WPF. Node.js 24 serve ai test del prototipo e ai controlli di architettura.
 
@@ -21,8 +25,8 @@ Nel modulo **Plinti · reazioni e MIDAS**: **Carica esempio**, modifica i parame
 
 | Cartella | Contenuto |
 | --- | --- |
-| `src` | 15 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
-| `apps` | App WPF e CLI, entrambe collegate allo stesso motore plinti |
+| `src` | 16 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
+| `apps` | App WPF, CLI e aggiornatore indipendente |
 | `tests` | Test C# senza pacchetti esterni e smoke WPF |
 | `examples` | Contratto JSON e reazioni CSV dimostrative |
 | `legacy` | Tutti i 28 progetti storici, con riferimenti aggiornati alle librerie estratte |

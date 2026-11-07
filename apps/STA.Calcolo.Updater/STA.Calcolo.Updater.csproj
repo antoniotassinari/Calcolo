@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF><Version>1.0.0</Version></PropertyGroup>
+ <ItemGroup><ProjectReference Include="../../src/STA.Calcolo.Updates.Core/STA.Calcolo.Updates.Core.csproj"/><Compile Include="../STA.Calcolo.Desktop/Infrastructure/ObservableObject.cs" Link="Infrastructure/ObservableObject.cs"/></ItemGroup>
+</Project>

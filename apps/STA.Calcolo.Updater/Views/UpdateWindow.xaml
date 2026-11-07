@@ -1,0 +1,3 @@
+<Window x:Class="STA.Calcolo.Updater.Views.UpdateWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="STA Calcolo · Aggiornamento" Width="580" Height="220" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#F3F5F7">
+ <StackPanel Margin="24"><TextBlock Text="STA Calcolo" FontSize="26" FontWeight="SemiBold"/><TextBlock Text="{Binding Status}" TextWrapping="Wrap" Margin="0,18"/><ProgressBar Height="5" IsIndeterminate="{Binding Working}"/></StackPanel>
+</Window>

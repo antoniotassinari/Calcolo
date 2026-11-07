@@ -5,7 +5,8 @@ Generato da `node tools/update-catalog.mjs`. La compilazione principale comprend
 | Progetto | Percorso | Dipendenze interne |
 | --- | --- | --- |
 | STA.Calcolo.Cli | apps/STA.Calcolo.Cli/STA.Calcolo.Cli.csproj | STA.Calcolo.IO, STA.Calcolo.Application |
-| STA.Calcolo.Desktop | apps/STA.Calcolo.Desktop/STA.Calcolo.Desktop.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Calcolo.Application |
+| STA.Calcolo.Desktop | apps/STA.Calcolo.Desktop/STA.Calcolo.Desktop.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Calcolo.Application, STA.Calcolo.Updates.Core |
+| STA.Calcolo.Updater | apps/STA.Calcolo.Updater/STA.Calcolo.Updater.csproj | STA.Calcolo.Updates.Core |
 | Acciai | legacy/Acciai/Acciai.csproj | Calcestruzzo, STA.Materiali |
 | Calcestruzzo | legacy/Calcestruzzo/Calcestruzzo.csproj | STA.Materiali |
 | Utilità | legacy/FinestraTest/Utilità.csproj | controlloWPFVentoBase, STA.Carichi.Neve, STA.Carichi.Sisma, STA.Prefabbricato.TraveIsostatica, Vento, VisualizzaMateriali |
@@ -37,6 +38,7 @@ Generato da `node tools/update-catalog.mjs`. La compilazione principale comprend
 | STA.Calcolo.Application | src/STA.Calcolo.Application/STA.Calcolo.Application.csproj | STA.Materiali, STA.Carichi.Neve.Core, STA.Carichi.Vento.Core, STA.Carichi.Sisma.Core, STA.Geometria.Masse.Core, STA.Prefabbricato.Trefolatura.Core, STA.Prefabbricato.Trave.Core, STA.Calcolo.IO, STA.Plinti.Storici.Core |
 | STA.Calcolo.Contracts | src/STA.Calcolo.Contracts/STA.Calcolo.Contracts.csproj | — |
 | STA.Calcolo.IO | src/STA.Calcolo.IO/STA.Calcolo.IO.csproj | STA.Plinti.Core |
+| STA.Calcolo.Updates.Core | src/STA.Calcolo.Updates.Core/STA.Calcolo.Updates.Core.csproj | — |
 | STA.Carichi.Neve.Core | src/STA.Carichi.Neve.Core/STA.Carichi.Neve.Core.csproj | STA.Common.Core |
 | STA.Carichi.Sisma.Core | src/STA.Carichi.Sisma.Core/STA.Carichi.Sisma.Core.csproj | — |
 | STA.Carichi.Vento.Core | src/STA.Carichi.Vento.Core/STA.Carichi.Vento.Core.csproj | — |
@@ -51,3 +53,4 @@ Generato da `node tools/update-catalog.mjs`. La compilazione principale comprend
 | STA.Prefabbricato.Trefolatura.Core | src/STA.Prefabbricato.Trefolatura.Core/STA.Prefabbricato.Trefolatura.Core.csproj | STA.Geometria.Core |
 | STA.Calcolo.Tests | tests/STA.Calcolo.Tests/STA.Calcolo.Tests.csproj | STA.Calcolo.IO, STA.Integrations.Midas, STA.Geometria.Masse.Core, STA.Carichi.Sisma.Core, STA.Materiali, STA.Calcolo.Application |
 | STA.Desktop.Smoke | tests/STA.Desktop.Smoke/STA.Desktop.Smoke.csproj | STA.Calcolo.Desktop |
+| STA.Updates.Tests | tests/STA.Updates.Tests/STA.Updates.Tests.csproj | STA.Calcolo.Updates.Core |

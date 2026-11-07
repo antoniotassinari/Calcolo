@@ -1,7 +1,8 @@
 STA CALCOLO - Suite WPF / MVVM
 
 Avvio: aprire STA.Calcolo.Desktop.exe.
-Requisito: Windows con runtime Microsoft .NET Desktop 10.
+Setup: Windows x64, runtime incluso; aggiornamenti automatici da GitHub.
+Pacchetto portabile framework-dependent: richiede runtime .NET Desktop 10.
 
 La finestra principale richiama materiali, carichi neve/vento/sisma,
 sezioni, trefolature, travi e plinti. Le finestre conservano il progetto

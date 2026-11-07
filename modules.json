@@ -29,6 +29,11 @@
       ]
     },
     {
+      "id": "STA.Calcolo.Updates.Core",
+      "project": "src/STA.Calcolo.Updates.Core/STA.Calcolo.Updates.Core.csproj",
+      "dependencies": []
+    },
+    {
       "id": "STA.Carichi.Neve.Core",
       "project": "src/STA.Carichi.Neve.Core/STA.Carichi.Neve.Core.csproj",
       "dependencies": [

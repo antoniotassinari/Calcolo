@@ -1,0 +1,72 @@
+name: Installer Windows
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+concurrency:
+  group: calcolo-release
+  cancel-in-progress: false
+jobs:
+  installer:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Versione e provenienza
+        run: |
+          $version=(Get-Content version.json -Raw | ConvertFrom-Json).version
+          if($version -notmatch '^\d+\.\d+\.\d+$'){throw 'Versione non valida'}
+          if($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version"){throw 'Tag e versione diversi'}
+          "APP_VERSION=$version" >> $env:GITHUB_ENV
+      - name: Compila e verifica
+        run: |
+          dotnet build Calcolo.sln -c Release --nologo
+          if($LASTEXITCODE -ne 0){throw 'Build fallita'}
+          foreach($project in @('STA.Calcolo.Tests','STA.Updates.Tests')){
+            dotnet "tests/$project/bin/Release/net10.0/$project.dll"
+            if($LASTEXITCODE -ne 0){throw "Test falliti: $project"}
+          }
+          dotnet tests/STA.Desktop.Smoke/bin/Release/net10.0-windows/STA.Desktop.Smoke.dll
+          if($LASTEXITCODE -ne 0){throw 'Smoke WPF fallito'}
+          node tools/verify-architecture.mjs
+          if($LASTEXITCODE -ne 0){throw 'Architettura non valida'}
+          node tools/verify-reference.mjs
+          if($LASTEXITCODE -ne 0){throw 'Confronto motori fallito'}
+      - name: Crea setup e pacchetto aggiornamento
+        run: |
+          $compiler='C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if(!(Test-Path $compiler)){choco install innosetup --yes --no-progress; if($LASTEXITCODE -ne 0){throw 'Inno Setup non disponibile'}}
+          ./deployment/Build-Release.ps1 -Version $env:APP_VERSION -Compiler $compiler
+      - name: Verifica installazione e rimozione
+        run: ./deployment/Test-Installer.ps1 -Version $env:APP_VERSION
+      - uses: actions/upload-artifact@v4
+        with:
+          name: STA-Calcolo-Installer
+          path: artifacts/installer/*
+          if-no-files-found: error
+      - name: Pubblica release stabile completa
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag="v$env:APP_VERSION"
+          gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
+          if($LASTEXITCODE -eq 0){throw 'Release già presente: non sovrascrivere i pacchetti pubblicati'}
+          gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "STA Calcolo $env:APP_VERSION" --notes-file deployment/RELEASE-NOTES.md
+          if($LASTEXITCODE -ne 0){throw 'Creazione release fallita'}
+          $files=@(Get-ChildItem artifacts/installer -File | Select-Object -ExpandProperty FullName)
+          gh release upload $tag @files --repo $env:GITHUB_REPOSITORY
+          if($LASTEXITCODE -ne 0){throw 'Caricamento pacchetti fallito: release lasciata in bozza'}
+          gh release edit $tag --repo $env:GITHUB_REPOSITORY --draft=false --latest
+          if($LASTEXITCODE -ne 0){throw 'Pubblicazione release fallita'}
