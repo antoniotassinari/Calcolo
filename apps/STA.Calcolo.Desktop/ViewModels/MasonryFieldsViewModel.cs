@@ -6,6 +6,7 @@ namespace STA.Calcolo.Desktop.ViewModels;
 public sealed class MasonryFieldsViewModel : ObservableObject
 {
     public IReadOnlyList<ModuleFieldViewModel> Fields {get;}
+    public IReadOnlyDictionary<string,ModuleFieldViewModel> ByKey => Fields.ToDictionary(f=>f.Key);
     public MasonryFieldsViewModel(object model, (string Key,string Label,string[]? Choices)[] definitions)
     {
         Fields=definitions.Select(d=>new ModuleFieldViewModel(new(d.Key,d.Label,Display(Convert.ToString(model.GetType().GetProperty(d.Key)!.GetValue(model),CultureInfo.InvariantCulture)??""),d.Choices))).ToArray();

@@ -11,7 +11,7 @@ internal static class Program
     [STAThread]
     static int Main()
     {
-        var app = new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; var files = new MemoryFileService(); var windows = new WindowService(files); var mainVm = new MainViewModel(windows); var main = new MainWindow { DataContext = mainVm }; app.MainWindow = main;
+        var app = new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; app.Resources.MergedDictionaries.Add(new ResourceDictionary {Source=new Uri("/STA.Calcolo.Desktop;component/Themes/Tassinari.xaml",UriKind.Relative)}); var files = new MemoryFileService(); var windows = new WindowService(files); var mainVm = new MainViewModel(windows); var main = new MainWindow { DataContext = mainVm }; app.MainWindow = main;
         foreach (var module in WorkspaceCatalog.Create())
         {
             var vm = new WorkspaceViewModel(module, files); vm.CalculateCommand.Execute(null);
@@ -32,12 +32,23 @@ internal static class Program
         masonry.CalculateCommand.Execute(null);if(masonry.Results.Count>0)throw new Exception("Bad masonry geometry accepted");
         files.NextOpen="masonry.json";masonry.OpenCommand.Execute(null);if(STA.Muratura.Core.MasonryFiles.Write(masonry.Build())!=masonrySaved)throw new Exception("Masonry round trip");
         masonry.DesignCommand.Execute(null);if(masonry.Proposals.Count!=3)throw new Exception(masonry.Status);
-        var mw=new MasonryWindow{DataContext=masonry};Render(mw,"muratura");var tabs=(System.Windows.Controls.TabControl)mw.FindName("ModuleTabs");tabs.SelectedIndex=2;Render(mw,"muratura-cerchiatura");tabs.SelectedIndex=3;Render(mw,"muratura-risultati");mw.Close();
+        var mw=new MasonryWindow{DataContext=masonry};Render(mw,"muratura");((FrameworkElement)mw.FindName("BeforeSection")).BringIntoView();Render(mw,"muratura-prima");((FrameworkElement)mw.FindName("FrameSection")).BringIntoView();Render(mw,"muratura-cerchiatura");((FrameworkElement)mw.FindName("ResultsSection")).BringIntoView();Render(mw,"muratura-risultati");mw.Close();
         masonry.SelectedProposal=masonry.Proposals.First(p=>p.Candidate!=null);var chosen=masonry.SelectedProposal.Candidate!.Profile.Id;masonry.UseProfileCommand.Execute(null);if(masonry.Build().Frame.Profile!=chosen||masonry.Results.Count==0)throw new Exception("Apply profile failed");
         masonry.CopyCommand.Execute(null);if(masonry.Before.Count!=masonry.After.Count)throw new Exception("Copy state");
         masonry.MaterialId="tenera-irregolare";masonry.ApplyMaterialCommand.Execute(null);masonry.CalculateCommand.Execute(null);if(masonry.Results.Count>0)throw new Exception("Missing density accepted");
         masonry.MaterialId="mattoni-calce";masonry.ApplyMaterialCommand.Execute(null);masonry.CalculateCommand.Execute(null);if(masonry.Results.Count==0)throw new Exception(masonry.Status);
-        Console.WriteLine("PASS WPF muratura: original JSON, edit invalidation, copy, materials, report, design and rendering");
+        masonry.BeforeCount=4;masonry.EqualBefore=true;masonry.Before[0].Editor.ByKey["H"].Value="380";
+        if(masonry.Before.Any(p=>p.Editor.ByKey["H"].Value!="380")||masonry.Before[1].HeightEditable)throw new Exception("Linked heights failed");
+        var linked=STA.Muratura.Core.MasonryFiles.Read(STA.Muratura.Core.MasonryFiles.Write(masonry.Build()));masonry.Load(linked);
+        if(!masonry.EqualBefore||masonry.BeforeCount!=4)throw new Exception("Height options not persisted");
+        masonry.EqualBefore=false;masonry.Before[1].Editor.ByKey["H"].Value="410";
+        if(masonry.Before[0].Editor.ByKey["H"].Value!="380"||!masonry.Before[1].HeightEditable)throw new Exception("Independent heights failed");
+        masonry.Before[0].MaterialId="pietrame";if(masonry.Before[0].Build().FmBase!=100)throw new Exception("Automatic material selection failed");
+        masonry.Before[0].Level="LC2";if(masonry.Before[0].Build().FmBase!=150)throw new Exception("LC selection failed");
+        masonry.Before[0].Material.Editor.ByKey["E"].Value="999";if(masonry.Before[0].MaterialId!="custom")throw new Exception("Custom material label failed");
+        masonry.Before[0].Editor.ByKey["H"].Value="invalid";if(masonry.Summary.StiffnessDelta!="—")throw new Exception("Stale live summary");
+        var preview=new MasonryWindow{DataContext=new MasonryViewModel(files)};Render(preview,"TA-Calcolo-cerchiature");var section=(FrameworkElement)preview.FindName("BeforeSection");var cards=Find<System.Windows.Controls.ItemsControl>(section);Capture(cards!,"TA-Calcolo-maschi");preview.Close();
+        Console.WriteLine("PASS WPF muratura: original JSON, invalidation, linked heights, automatic material selection, live summary, report, design and rendering");
         var footing = new FootingViewModel(files); footing.ExampleCommand.Execute(null); footing.CalculateCommand.Execute(null);
         if (footing.Results.Length != 1 || !footing.ExportCommand.CanExecute(null)) throw new Exception(footing.Status);
         files.NextSave = "footing.json"; footing.SaveCommand.Execute(null); files.NextSave = "footing-results.json"; footing.ExportCommand.Execute(null);
@@ -58,10 +69,12 @@ internal static class Program
         foreach (Window child in main.OwnedWindows.Cast<Window>().ToArray()) child.Close();
         main.Close(); app.Shutdown(); Console.WriteLine("PASS MVVM: navigation, rendering, calculations, invalidation"); return 0;
     }
+    static T? Find<T>(DependencyObject parent) where T:DependencyObject {for(int i=0;i<VisualTreeHelper.GetChildrenCount(parent);i++){var child=VisualTreeHelper.GetChild(parent,i);if(child is T found)return found;var nested=Find<T>(child);if(nested!=null)return nested;}return null;}
+    static void Capture(FrameworkElement content,string name){var bitmap=new RenderTargetBitmap((int)Math.Ceiling(content.ActualWidth),(int)Math.Ceiling(content.ActualHeight),96,96,PixelFormats.Pbgra32);var visual=new DrawingVisual();using(var dc=visual.RenderOpen())dc.DrawRectangle(new VisualBrush(content),null,new Rect(0,0,content.ActualWidth,content.ActualHeight));bitmap.Render(visual);using var stream=System.IO.File.Create("artifacts/"+name+".png");var encoder=new PngBitmapEncoder();encoder.Frames.Add(BitmapFrame.Create(bitmap));encoder.Save(stream);}
     static void Render(Window window, string name)
     {
-        window.Show(); window.UpdateLayout();
-        var content = (FrameworkElement)window.Content; content.Measure(new Size(1180, 820)); content.Arrange(new Rect(0, 0, 1180, 820)); content.UpdateLayout();
-        var bitmap = new RenderTargetBitmap(1180, 820, 96, 96, PixelFormats.Pbgra32); bitmap.Render(content); System.IO.Directory.CreateDirectory("artifacts"); using var file = System.IO.File.Create("artifacts/" + name + ".png"); var encoder = new PngBitmapEncoder(); encoder.Frames.Add(BitmapFrame.Create(bitmap)); encoder.Save(file);
+        window.Width=1180;window.Height=820;window.Show(); window.UpdateLayout();
+        var content = (FrameworkElement)window.Content; content.UpdateLayout();
+        var bitmap = new RenderTargetBitmap((int)Math.Ceiling(content.ActualWidth), (int)Math.Ceiling(content.ActualHeight), 96, 96, PixelFormats.Pbgra32); var drawing=new DrawingVisual();using(var dc=drawing.RenderOpen())dc.DrawRectangle(new VisualBrush(content),null,new Rect(0,0,content.ActualWidth,content.ActualHeight));bitmap.Render(drawing); System.IO.Directory.CreateDirectory("artifacts"); using var file = System.IO.File.Create("artifacts/" + name + ".png"); var encoder = new PngBitmapEncoder(); encoder.Frames.Add(BitmapFrame.Create(bitmap)); encoder.Save(file);
     }
 }

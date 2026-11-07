@@ -21,6 +21,8 @@ public static class InstalledApplication
     {
         using var key=Registry.CurrentUser.OpenSubKey(RegistryPath,true);
         key?.SetValue("DisplayVersion",version);
+        key?.SetValue("DisplayName","TA-Calcolo");
+        key?.SetValue("Publisher","Tassinari Associati");
     }
     public static void Launch(string root)
     {

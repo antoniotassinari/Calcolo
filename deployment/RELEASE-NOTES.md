@@ -1,15 +1,12 @@
-STA Calcolo 1.1.0: aggiunto il modulo Muratura e cerchiatura alla suite WPF .NET 10 con MVVM e classi separate.
+TA-Calcolo 1.2.0: nuova identità Tassinari Associati e modulo cerchiature ridisegnato secondo la pagina web originale.
 
-- Stati prima/dopo, carichi N o q e materiali per ciascun maschio.
-- Catalogo murature nella libreria materiali condivisa; 66 profili OPPO in una libreria indipendente.
-- Cerchiatura e ricerca preliminare HEA/HEB/IPE, importazione JSON del sito e relazione stampabile.
-- 164 confronti numerici con il codice originale e prove della finestra WPF.
+- Nome TA-Calcolo, logo, icona e carattere Acherus di Tassinari Associati.
+- Pagina unica: riepilogo fisso, configurazione, maschi prima/dopo affiancati, cerchiatura e risultati.
+- Geometria, materiali, caratteristiche corrette e carichi in gruppi leggibili; campi gialli modificabili e valori grigi calcolati.
+- Materiali applicati alla selezione, coefficienti con etichette individuali, numero maschi e altezze collegate con salvataggio delle impostazioni.
+- Corrette le etichette delle resistenze murarie in N/cm²; formule e valori numerici invariati.
+- Materiali, maschi, profili e cerchiature hanno ciascuno Model, ViewModel e View separati, con controlli WPF riutilizzabili. Compatibile con progetti e aggiornamento automatico delle versioni precedenti.
 
-- Setup Windows x64 per utente, con runtime .NET incluso.
-- Aggiornamento automatico dalle release GitHub prima dell'apertura dei progetti.
-- Pacchetti verificati con SHA-256, backup e ripristino in caso di interruzione.
-- Controllo manuale degli aggiornamenti dalla finestra principale.
+Scaricare **TA-Calcolo-Setup-1.2.0-win-x64.exe**. Il pacchetto **STA-Calcolo-Update-1.2.0-win-x64.zip** mantiene il nome compatibile con l’aggiornatore esistente ed è destinato all’aggiornamento automatico.
 
-Scaricare **STA-Calcolo-Setup-1.1.0-win-x64.exe**. Il file ZIP Update è destinato all'aggiornatore, non all'installazione manuale. Windows può mostrare il controllo del produttore sconosciuto perché il setup non è firmato Authenticode.
-
-La migrazione tecnologica conserva i limiti dei calcoli storici. Per le funzioni e le compatibilità residue consultare `docs/WPF-MIGRATION.md`; istruzioni di installazione in `deployment/INSTALLAZIONE.md`.
+Conservati i limiti del modello originale: confronto preliminare, non verifica strutturale completa. Istruzioni in Guida-muratura.md, inclusa nell’installazione.

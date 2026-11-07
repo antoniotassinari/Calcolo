@@ -63,7 +63,7 @@ jobs:
           $tag="v$env:APP_VERSION"
           gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
           if($LASTEXITCODE -eq 0){throw 'Release già presente: non sovrascrivere i pacchetti pubblicati'}
-          gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "STA Calcolo $env:APP_VERSION" --notes-file deployment/RELEASE-NOTES.md
+          gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "TA-Calcolo $env:APP_VERSION" --notes-file deployment/RELEASE-NOTES.md
           if($LASTEXITCODE -ne 0){throw 'Creazione release fallita'}
           $files=@(Get-ChildItem artifacts/installer -File | Select-Object -ExpandProperty FullName)
           gh release upload $tag @files --repo $env:GITHUB_REPOSITORY

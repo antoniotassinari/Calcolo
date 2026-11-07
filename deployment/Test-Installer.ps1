@@ -1,9 +1,9 @@
 param([Parameter(Mandatory)][string]$Version)
 $ErrorActionPreference='Stop'
 $registry='HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{9FEC2950-470C-4A70-ADCD-EE58E640A4DD}_is1'
-if(Test-Path $registry){throw 'STA Calcolo è già installato: usare una macchina di test isolata'}
+if(Test-Path $registry){throw 'TA-Calcolo è già installato: usare una macchina di test isolata'}
 $destination=Join-Path ([IO.Path]::GetTempPath()) ('STA-Calcolo-InstallerCheck-'+[guid]::NewGuid().ToString('N'))
-$setup=(Resolve-Path "artifacts/installer/STA-Calcolo-Setup-$Version-win-x64.exe").Path
+$setup=(Resolve-Path "artifacts/installer/TA-Calcolo-Setup-$Version-win-x64.exe").Path
 $app=$null
 function Install {
     $process=Start-Process -FilePath $setup -ArgumentList @('/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/SP-',('/DIR="'+$destination+'"')) -WindowStyle Hidden -Wait -PassThru

@@ -53,3 +53,5 @@ Il calcolo dei plinti mantiene l'ambito del prototipo: controlli parziali di equ
 Vedi [architettura](docs/ARCHITECTURE.md), [recupero e migrazione](docs/MIGRATION.md), [inventario progetti](docs/PROJECTS.md) e [contratto dati](docs/DATA-CONTRACT.md).
 
 Il modulo **Muratura e cerchiatura** (versione 1.1.0) aggiunge confronto prima/dopo, materiali condivisi, catalogo profili separato e ricerca preliminare. [Guida](docs/MURATURA.md). Verificato su 164 casi rispetto al codice web originale.
+
+Dalla versione **1.2.0** l’applicazione si chiama **TA-Calcolo** e usa logo, icona, caratteri e colori Tassinari Associati. Il modulo cerchiature riprende la pagina originale con maschi affiancati e riepilogo fisso.

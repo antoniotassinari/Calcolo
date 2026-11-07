@@ -24,7 +24,7 @@ for(const file of ['apps/STA.Calcolo.Desktop/ViewModels','apps/STA.Calcolo.Updat
  const text=fs.readFileSync(file,'utf8');if(/using System\.Windows|Microsoft\.Win32|InitializeComponent|MessageBox/.test(text))throw Error('ViewModel dipendente dalla View: '+file);
 }
 for(const file of ['apps/STA.Calcolo.Desktop','apps/STA.Calcolo.Updater'].flatMap(walk).filter(p=>p.endsWith('.xaml.cs')&&!p.endsWith('App.xaml.cs'))){
- const text=fs.readFileSync(file,'utf8');if(!/public partial class \w+ : Window\s*\{\s*public \w+\(\)\s*\{\s*InitializeComponent\(\);\s*\}\s*\}/.test(text))throw Error('Logica nel code-behind: '+file);
+ const text=fs.readFileSync(file,'utf8');if(!/public partial class \w+ : (?:Window|UserControl)\s*\{\s*public \w+\(\)\s*\{\s*InitializeComponent\(\);\s*\}\s*\}/.test(text))throw Error('Logica nel code-behind: '+file);
 }
 console.log('PASS MVVM: ViewModel senza dipendenze dalle finestre; code-behind solo inizializzazione');
 
