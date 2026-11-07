@@ -27,7 +27,11 @@ internal static class Program
         var masonry=new MasonryViewModel(files);masonry.ExampleCommand.Execute(null);masonry.CalculateCommand.Execute(null);
         if(masonry.Results.Count==0)throw new Exception(masonry.Status);
         files.NextSave="masonry.json";masonry.SaveCommand.Execute(null);var masonrySaved=files.Content[files.NextSave];
-        files.NextSave="masonry-report.html";masonry.ReportCommand.Execute(null);if(!files.Content[files.NextSave].Contains("<table>"))throw new Exception("Report missing");
+        files.NextSave="masonry-report.pdf";masonry.ReportCommand.Execute(null);if(!files.Binary.ContainsKey(files.NextSave))throw new Exception(masonry.Status);
+        files.NextSave="masonry-report.docx";masonry.WordReportCommand.Execute(null);if(!files.Binary.ContainsKey(files.NextSave))throw new Exception(masonry.Status);
+        System.IO.Directory.CreateDirectory("artifacts/reports");System.IO.File.WriteAllBytes("artifacts/reports/relazione-esempio.pdf",files.Binary["masonry-report.pdf"]);System.IO.File.WriteAllBytes("artifacts/reports/relazione-esempio.docx",files.Binary["masonry-report.docx"]);
+        using(var package=new System.IO.Compression.ZipArchive(new System.IO.MemoryStream(files.Binary["masonry-report.docx"])))if(package.GetEntry("word/document.xml")==null)throw new Exception("DOCX invalid");
+        if(masonry.Comparison.Count!=2||masonry.BeforeResults.Count()!=2||masonry.AfterResults.Count()!=3)throw new Exception("Grouped results missing");
         masonry.Before[0].Editor.Fields.Single(f=>f.Key=="H").Value="bad";if(masonry.Results.Count>0||masonry.ReportCommand.CanExecute(null))throw new Exception("Stale masonry results");
         masonry.CalculateCommand.Execute(null);if(masonry.Results.Count>0)throw new Exception("Bad masonry geometry accepted");
         files.NextOpen="masonry.json";masonry.OpenCommand.Execute(null);if(STA.Muratura.Core.MasonryFiles.Write(masonry.Build())!=masonrySaved)throw new Exception("Masonry round trip");

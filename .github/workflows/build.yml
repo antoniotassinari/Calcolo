@@ -30,6 +30,8 @@ jobs:
         run: node --test archive/midas-plinti-web/tests/api.test.js archive/midas-plinti-web/tests/engine.test.js
       - name: Parita motore C# e prototipo
         run: node tools/verify-reference.mjs
+      - name: Relazioni Word e PDF
+        run: dotnet tests/STA.Reporting.Tests/bin/Release/net10.0/STA.Reporting.Tests.dll
       - name: Smoke WPF
         run: dotnet tests/STA.Desktop.Smoke/bin/Release/net10.0-windows/STA.Desktop.Smoke.dll
       - name: Pacchetto desktop
@@ -55,3 +57,5 @@ jobs:
         run: dotnet run --project tests/STA.Updates.Tests -c Release
       - name: Muratura portabile
         run: dotnet run --project tests/STA.Muratura.Tests -c Release
+      - name: Relazioni portabili
+        run: dotnet run --project tests/STA.Reporting.Tests -c Release

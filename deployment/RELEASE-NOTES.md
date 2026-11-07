@@ -1,12 +1,10 @@
-TA-Calcolo 1.2.0: nuova identità Tassinari Associati e modulo cerchiature ridisegnato secondo la pagina web originale.
+TA-Calcolo 1.3.0: relazioni Word e PDF e risultati del confronto riorganizzati.
 
-- Nome TA-Calcolo, logo, icona e carattere Acherus di Tassinari Associati.
-- Pagina unica: riepilogo fisso, configurazione, maschi prima/dopo affiancati, cerchiatura e risultati.
-- Geometria, materiali, caratteristiche corrette e carichi in gruppi leggibili; campi gialli modificabili e valori grigi calcolati.
-- Materiali applicati alla selezione, coefficienti con etichette individuali, numero maschi e altezze collegate con salvataggio delle impostazioni.
-- Corrette le etichette delle resistenze murarie in N/cm²; formule e valori numerici invariati.
-- Materiali, maschi, profili e cerchiature hanno ciascuno Model, ViewModel e View separati, con controlli WPF riutilizzabili. Compatibile con progetti e aggiornamento automatico delle versioni precedenti.
+- Relazione Word .docx modificabile e PDF generato direttamente, senza richiedere Microsoft Word.
+- A4 verticale con margini di 15 mm, logo Tassinari Associati, due schede maschio affiancate per pagina e numerazione.
+- Confronto dei totali prima/dopo/telaio/finale, dati e materiali, coefficienti, risultati di ciascun maschio, cerchiatura e metodo.
+- Percorso di calcolo dopo la sintesi: formule ingegneristiche numerate, frazioni, simboli, unità e sostituzioni numeriche; equazioni modificabili in Word.
+- Tabelle a video separate per stato, una riga per maschio, numeri italiani e legenda delle grandezze.
+- Esportazioni generate dai dati validati del progetto; invalidazione dopo modifiche. Servizi di relazione separati dai ViewModel.
 
-Scaricare **TA-Calcolo-Setup-1.2.0-win-x64.exe**. Il pacchetto **STA-Calcolo-Update-1.2.0-win-x64.zip** mantiene il nome compatibile con l’aggiornatore esistente ed è destinato all’aggiornamento automatico.
-
-Conservati i limiti del modello originale: confronto preliminare, non verifica strutturale completa. Istruzioni in Guida-muratura.md, inclusa nell’installazione.
+Scaricare **TA-Calcolo-Setup-1.3.0-win-x64.exe** oppure usare l’aggiornamento automatico. Il file STA-Calcolo-Update è riservato all’aggiornatore.

@@ -25,7 +25,7 @@ Nel modulo **Plinti · reazioni e MIDAS**: **Carica esempio**, modifica i parame
 
 | Cartella | Contenuto |
 | --- | --- |
-| `src` | 18 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
+| `src` | 19 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
 | `apps` | App WPF, CLI e aggiornatore indipendente |
 | `tests` | Test C# senza pacchetti esterni e smoke WPF |
 | `examples` | Contratto JSON e reazioni CSV dimostrative |
@@ -55,3 +55,5 @@ Vedi [architettura](docs/ARCHITECTURE.md), [recupero e migrazione](docs/MIGRATIO
 Il modulo **Muratura e cerchiatura** (versione 1.1.0) aggiunge confronto prima/dopo, materiali condivisi, catalogo profili separato e ricerca preliminare. [Guida](docs/MURATURA.md). Verificato su 164 casi rispetto al codice web originale.
 
 Dalla versione **1.2.0** l’applicazione si chiama **TA-Calcolo** e usa logo, icona, caratteri e colori Tassinari Associati. Il modulo cerchiature riprende la pagina originale con maschi affiancati e riepilogo fisso.
+
+La versione **1.3.0** aggiunge relazioni Word/PDF A4 con margini e risultati raggruppati per stato e maschio. [Guida alle relazioni](docs/RELAZIONI.md).

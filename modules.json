@@ -29,6 +29,13 @@
       ]
     },
     {
+      "id": "STA.Calcolo.Reporting",
+      "project": "src/STA.Calcolo.Reporting/STA.Calcolo.Reporting.csproj",
+      "dependencies": [
+        "STA.Muratura.Core"
+      ]
+    },
+    {
       "id": "STA.Calcolo.Updates.Core",
       "project": "src/STA.Calcolo.Updates.Core/STA.Calcolo.Updates.Core.csproj",
       "dependencies": []

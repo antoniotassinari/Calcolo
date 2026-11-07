@@ -7,4 +7,5 @@ public sealed class FileService : IFileService
     public string? Save(string filter, string name) { var dialog = new SaveFileDialog { Filter = filter, FileName = name, InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) }; return dialog.ShowDialog() == true ? dialog.FileName : null; }
     public string Read(string path) => System.IO.File.ReadAllText(path);
     public void Write(string path, string text) => System.IO.File.WriteAllText(path, text);
+    public void WriteBytes(string path,byte[] content)=>System.IO.File.WriteAllBytes(path,content);
 }

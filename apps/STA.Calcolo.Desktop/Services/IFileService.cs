@@ -6,4 +6,5 @@ public interface IFileService
     string? Save(string filter, string name);
     string Read(string path);
     void Write(string path, string text);
+    void WriteBytes(string path,byte[] content);
 }

@@ -5,6 +5,7 @@ using STA.Calcolo.Desktop.Services;
 using STA.Materiali;
 using STA.Muratura.Core;
 using STA.Profilati.Core;
+using STA.Calcolo.Reporting;
 namespace STA.Calcolo.Desktop.ViewModels;
 
 public sealed class MasonryViewModel : ObservableObject
@@ -32,15 +33,20 @@ public sealed class MasonryViewModel : ObservableObject
     public string[] Levels {get;}=["LC1","LC2","LC3"];
     private string status="Inserire i dati e calcolare.";public string Status {get=>status;private set=>Set(ref status,value);}
     public IReadOnlyList<ResultRow> Results {get;private set;}=[];
+    public IReadOnlyList<ReportEquation> Derivation {get;private set;}=[];
+    public IReadOnlyList<ComparisonRow> Comparison {get;private set;}=[];
+    public IReadOnlyList<PierSummaryRow> PierResults {get;private set;}=[];
+    public IEnumerable<PierSummaryRow> BeforeResults=>PierResults.Where(r=>r.Stato=="Prima");
+    public IEnumerable<PierSummaryRow> AfterResults=>PierResults.Where(r=>r.Stato=="Dopo");
     public IReadOnlyList<ProfileProposal> Proposals=>Frame?.Proposals??[];
     public ProfileProposal? SelectedProposal {get=>Frame?.SelectedProposal;set{if(Frame!=null)Frame.SelectedProposal=value;}}
     public RelayCommand AddBeforeCommand{get;} public RelayCommand AddAfterCommand{get;} public RelayCommand CopyCommand{get;} public RelayCommand ExampleCommand{get;}
     public RelayCommand ApplyMaterialCommand{get;} public RelayCommand CalculateCommand{get;} public RelayCommand DesignCommand=>Frame?.DesignCommand!; public RelayCommand UseProfileCommand=>Frame?.UseProfileCommand!;
-    public RelayCommand OpenCommand{get;} public RelayCommand SaveCommand{get;} public RelayCommand ExportCommand{get;} public RelayCommand ReportCommand{get;}
+    public RelayCommand OpenCommand{get;} public RelayCommand SaveCommand{get;} public RelayCommand ExportCommand{get;} public RelayCommand ReportCommand{get;} public RelayCommand WordReportCommand{get;}
     public RelayCommand EqualBeforeCommand{get;} public RelayCommand EqualAfterCommand{get;}
-    public MasonryViewModel(IFileService files)
+    public MasonryViewModel(IFileService files,IMasonryReportService? reportService=null)
     {
-        this.files=files;
+        this.files=files;var reports=reportService??new MasonryReportService();
         AddBeforeCommand=new(()=>Run(()=>Add(Before,MasonryCalculator.Preset(new(),MaterialId,Level))));AddAfterCommand=new(()=>Run(()=>Add(After,MasonryCalculator.Preset(new(),MaterialId,Level))));
         CopyCommand=new(()=>Run(()=>{var data=Before.Select(x=>x.Build()).ToArray();After.Clear();foreach(var p in data)Add(After,p with {C=[..p.C]});}));
         ExampleCommand=new(()=>Run(()=>Load(MasonryFiles.Example())));
@@ -50,7 +56,8 @@ public sealed class MasonryViewModel : ObservableObject
         OpenCommand=new(()=>Run(()=>{var path=files.Open("Progetto muratura (anche dal sito)|*.json");if(path!=null){var text=files.Read(path);Load(MasonryFiles.Read(text));Status="Progetto aperto. Altezza efficace = altezza geometrica; controllare eventuali altezze efficaci del progetto originale.";}}));
         SaveCommand=new(()=>Run(()=>{var text=MasonryFiles.Write(Build());var path=files.Save("Progetto muratura|*.json","confronto-maschi.json");if(path!=null){files.Write(path,text);Status="Progetto salvato, compatibile con il sito.";}}));
         ExportCommand=new(()=>Run(()=>{var path=files.Save("Risultati JSON|*.json","muratura-risultati.json");if(path!=null)files.Write(path,ModuleFiles.Write(new{Input=Build(),Results}));}),()=>Results.Count>0);
-        ReportCommand=new(()=>Run(()=>{var path=files.Save("Relazione HTML stampabile|*.html","confronto-maschi.html");if(path!=null){files.Write(path,MasonryReport.Create(Build(),Results));Status="Relazione salvata: aprirla nel browser per stampare o salvare in PDF.";}}),()=>Results.Count>0);
+        ReportCommand=new(()=>Run(()=>{var p=Build();var path=files.Save("Relazione PDF|*.pdf","relazione-maschi.pdf");if(path!=null){files.WriteBytes(path,reports.Pdf(p));Status="Relazione PDF salvata in formato A4 con margini di 15 mm.";}}),()=>Results.Count>0);
+        WordReportCommand=new(()=>Run(()=>{var p=Build();var path=files.Save("Relazione Word|*.docx","relazione-maschi.docx");if(path!=null){files.WriteBytes(path,reports.Word(p));Status="Relazione Word modificabile salvata in formato A4 con margini di 15 mm.";}}),()=>Results.Count>0);
         Load(new(){Before=[new(),new(),new()],After=[new(),new(),new()],EqualHeights=new(){["before"]=true,["after"]=true}});
     }
     private void Equal(ObservableCollection<MasonryPierViewModel> rows){var h=rows[0].Editor.Fields.Single(f=>f.Key=="H").Value;foreach(var p in rows)p.Editor.Fields.Single(f=>f.Key=="H").Value=h;}
@@ -78,8 +85,8 @@ public sealed class MasonryViewModel : ObservableObject
         var f=FrameCalculator.Calculate(p.Frame,a,b);double dk=((f?.FinalK??b.K)/a.K-1)*100,dv=((f?.FinalV??b.Vt)/a.Vt-1)*100;
         rows.AddRange([new("ΔK finale / prima",dk,"%"),new("ΔV finale / prima",dv,"%")]);
         if(f!=null){rows.AddRange([new("Telaio · J colonna",f.J,"cm⁴"),new("Telaio · W colonna",f.W,"cm³"),new("Telaio · V massimo",f.V,"kN"),new("Telaio · K",f.K,"N/cm"),new("Telaio · dy",f.Dy,"mm"),new("Telaio · Veff mobilitato",f.Veff,"kN"),new("Finale · V",f.FinalV,"kN"),new("Finale · K",f.FinalK,"N/cm")]);if(f.Wstar is double w)rows.Add(new("W* (ipotesi due colonne)",w,"cm³"));}
-        Results=rows;Changed(nameof(Results));ExportCommand.Refresh();ReportCommand.Refresh();Status=$"Resistenza {(dv>=0?"non diminuita":"diminuita")}; rigidezza {(FrameCalculator.StiffnessAccepts(dk)?"entro":"oltre")} ±15%. Confronto preliminare, non verifica completa.";
+        Results=rows;Derivation=MasonryDerivation.Build(p).SelectMany(page=>page.Equations??[]).ToArray();Changed(nameof(Derivation));Comparison=MasonryReportBuilder.Compare(p);PierResults=MasonryReportBuilder.Piers(p);Changed(nameof(Comparison));Changed(nameof(BeforeResults));Changed(nameof(AfterResults));Changed(nameof(Results));ExportCommand.Refresh();ReportCommand.Refresh();WordReportCommand.Refresh();Status=$"Resistenza {(dv>=0?"non diminuita":"diminuita")}; rigidezza {(FrameCalculator.StiffnessAccepts(dk)?"entro":"oltre")} ±15%. Confronto preliminare, non verifica completa.";
     }
-    private void Invalidate(){try{Summary=Frame==null?MasonrySummaryViewModel.Empty:MasonrySummaryViewModel.Create(Build());}catch{Summary=MasonrySummaryViewModel.Empty;}Changed(nameof(Summary));Results=[];Frame?.ClearProposals();Changed(nameof(Results));Changed(nameof(Proposals));Changed(nameof(SelectedProposal));ExportCommand?.Refresh();ReportCommand?.Refresh();UseProfileCommand?.Refresh();Status="Dati modificati: ricalcolare.";}
+    private void Invalidate(){try{Summary=Frame==null?MasonrySummaryViewModel.Empty:MasonrySummaryViewModel.Create(Build());}catch{Summary=MasonrySummaryViewModel.Empty;}Changed(nameof(Summary));Results=[];Derivation=[];Changed(nameof(Derivation));Comparison=[];PierResults=[];Changed(nameof(Comparison));Changed(nameof(BeforeResults));Changed(nameof(AfterResults));Frame?.ClearProposals();Changed(nameof(Results));Changed(nameof(Proposals));Changed(nameof(SelectedProposal));ExportCommand?.Refresh();ReportCommand?.Refresh();WordReportCommand?.Refresh();UseProfileCommand?.Refresh();Status="Dati modificati: ricalcolare.";}
     private void Run(Action action){try{action();}catch(Exception e){Invalidate();Status=e.Message;}}
 }

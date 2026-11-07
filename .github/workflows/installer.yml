@@ -33,7 +33,7 @@ jobs:
         run: |
           dotnet build Calcolo.sln -c Release --nologo
           if($LASTEXITCODE -ne 0){throw 'Build fallita'}
-          foreach($project in @('STA.Calcolo.Tests','STA.Updates.Tests','STA.Muratura.Tests')){
+          foreach($project in @('STA.Calcolo.Tests','STA.Updates.Tests','STA.Muratura.Tests','STA.Reporting.Tests')){
             dotnet "tests/$project/bin/Release/net10.0/$project.dll"
             if($LASTEXITCODE -ne 0){throw "Test falliti: $project"}
           }

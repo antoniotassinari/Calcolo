@@ -9,7 +9,7 @@ Modulo di TA-Calcolo, WPF .NET 10, MVVM con classi separate, richiamabile dalla 
 - Resistenze fm/τ prima di FC in N/cm²; E/G in MPa non fessurati; peso specifico in daN/m³. Per pietra tenera il peso va inserito esplicitamente. LC1: minimi resistenti, FC 1,35; LC2: medie, FC 1,20. LC3 è disponibile per dati valutati dal professionista; non deriva una caratterizzazione sperimentale dal catalogo.
 - Sette coefficienti nell'ordine indicato. Tutti influenzano le resistenze; ricorsi e connessione trasversale non moltiplicano E/G. Fessurazione dimezza E/G una sola volta.
 - Cerchiatura: spuntare Includi il contributo; impostare colonne, profili per colonna, altezza, acciaio e portale. Progetta esamina HEA, HEB, IPE e propone la prima taglia con ΔK entro ±15% e V finale strettamente maggiore del prima. Una proposta vuota significa nessuna soluzione.
-- Calcola dettagli popola la tabella Risultati. Il riepilogo in alto si aggiorna durante la modifica. Modificare i dati annulla risultati e proposte precedenti. Relazione stampabile salva HTML con input e risultati; aprire nel browser e stampare o salvare PDF.
+- Calcola dettagli popola la tabella Risultati. Il riepilogo in alto si aggiorna durante la modifica. Modificare i dati annulla risultati e proposte precedenti. Relazione Word e Relazione PDF generano documenti A4 con margini di 15 mm, schede dei maschi affiancate, confronti e cerchiatura. Il Word è modificabile; il PDF è prodotto direttamente.
 - Apri legge i JSON del sito (versione 1/2); Salva produce versione 2 compatibile con il sito. Le impostazioni delle altezze uguali vengono conservate. L'altezza efficace è sempre quella geometrica; dopo l'importazione viene ricordato di verificare eventuali altezze efficaci del progetto originale.
 
 ## Moduli interoperabili
@@ -26,3 +26,5 @@ Si riproducono le formule del sito/foglio: somma dei soli Vt per fessurazione di
 La parità numerica verifica la fedeltà al codice acquisito, non certifica le formule. `STA.Muratura.Tests` controlla 164 casi generati dai motori JavaScript originali, tutte le tipologie e tutti i profili nei due portali, ricerca, importazione legacy e dati non validi. `STA.Desktop.Smoke` verifica modifica, salvataggio/apertura, materiali, relazione e visualizzazione. Rigenerazione riferimenti: `node tools/generate-masonry-reference.cjs`.
 
 La struttura delle classi è descritta in [Componenti MVVM](MVVM-CERCHIATURE.md): Model, ViewModel e View distinti per materiali, maschi, profili e cerchiature.
+
+Dettagli di contenuto e impaginazione: [Relazioni Word e PDF](RELAZIONI.md).
