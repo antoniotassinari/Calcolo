@@ -41,6 +41,7 @@ using(var source=new MidasReactionSource("https://example.test/gen","test-only",
  bool rejected=false;try{await source.ReadAsync(new([1],["ULS01(CB)","MISSING(CB)"]));}catch(InvalidDataException){rejected=true;}Test("MIDAS rifiuta combinazioni mancanti",()=>Assert(rejected));
 }
 Test("MIDAS URL e chiave",()=>{Reject(()=>new MidasReactionSource("http://example.test","key"));Reject(()=>new MidasReactionSource("https://example.test",""));});
+ApplicationTests.Run(Test);
 Console.WriteLine($"{count} test superati");
 
 sealed class FakeHandler(string table) : HttpMessageHandler

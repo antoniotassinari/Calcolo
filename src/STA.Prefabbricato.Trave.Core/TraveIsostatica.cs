@@ -72,6 +72,7 @@ namespace STA.Prefabbricato.TraveIsostatica
         public TraveIsostatica()
         {
             MaschereTrefoli = new ClasseGestioneElencoTrefolature();
+            ElencoSezioni = new List<Sezione>();
         }
 
 

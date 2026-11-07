@@ -1,5 +1,7 @@
 # Recupero e migrazione del 4 novembre 2026
 
+Aggiornamento del 7 novembre: la suite desktop è stata estesa con finestre WPF/MVVM. Vedere [mappatura, verifiche e limiti attuali](WPF-MIGRATION.md). Il testo seguente documenta il primo recupero.
+
 Base GitHub: commit `48b533d`, branch `master` di `antoniotassinari/Calcolo`.
 
 Il prototipo non era stato pubblicato su GitHub. È stato ricostruito dai diff completi e dai comandi di scrittura registrati nella chat **Modifica Calcolo**, ID `01a1a2af-42c8-72f6-b377-df6947ae2071`, del 3 novembre 2026. Sono stati recuperati motore JavaScript, client API, interfaccia web, server locale, guida, test e abbozzo C#. Il file C# Models.cs è ricostruito dal generatore registrato. Non è stata recuperata una copia binaria dello ZIP originario, né i manuali MIDAS allegati.

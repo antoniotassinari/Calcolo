@@ -1,0 +1,29 @@
+<Window x:Class="STA.Calcolo.Desktop.Views.FootingWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:local="clr-namespace:STA.Calcolo.Desktop.Views" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="STA · Calcolo · Plinti" Width="1240" Height="850" MinWidth="900" MinHeight="650" Background="#F3F5F7">
+ <Window.Resources><Style TargetType="Button"><Setter Property="Margin" Value="4"/><Setter Property="Padding" Value="12,8"/></Style><Style TargetType="TextBox"><Setter Property="Margin" Value="3"/><Setter Property="Padding" Value="5"/></Style></Window.Resources>
+ <DockPanel Margin="18" Background="#F3F5F7">
+  <StackPanel DockPanel.Dock="Top">
+   <TextBlock Text="STA · Plinti da reazioni vincolari" FontSize="25" FontWeight="SemiBold"/>
+   <TextBlock Text="kN / m / kPa · Controlli parziali: punzonamento preliminare, esclusi cedimenti e dettagli costruttivi." TextWrapping="Wrap" Margin="0,8"/>
+   <WrapPanel><Button Content="Apri progetto JSON" Command="{Binding OpenCommand}"/><Button Content="Salva progetto" Command="{Binding SaveCommand}"/><Button Content="Importa reazioni CSV" Command="{Binding ImportCommand}"/><Button Content="Carica esempio" Command="{Binding ExampleCommand}"/><Button Content="Calcola" Command="{Binding CalculateCommand}"/><Button Content="Esporta risultati" Command="{Binding ExportCommand}" x:Name="ExportButton"/></WrapPanel>
+  </StackPanel>
+  <TextBlock DockPanel.Dock="Bottom" x:Name="Status" Text="{Binding Status}" TextWrapping="Wrap" Margin="0,10"/>
+  <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="340"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+   <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,8,12,0">
+    <TextBlock Text="Parametri di progetto" FontSize="18"/>
+    <TextBlock Text="Punto decimale. Resistenza e attrito del terreno sono dati del progetto." TextWrapping="Wrap" Margin="0,5"/>
+    <DataGrid x:Name="ParametersGrid" ItemsSource="{Binding Parameters}" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="0,5"><DataGrid.Columns><DataGridTextColumn Header="Parametro" Binding="{Binding Label}" IsReadOnly="True" Width="205"/><DataGridTextColumn Header="Valore" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Width="95"/></DataGrid.Columns></DataGrid>
+    <TextBlock Text="MIDAS GEN NX" FontSize="18" Margin="0,15,0,5"/>
+    <TextBlock Text="Base URL da API Settings"/><TextBox x:Name="BaseUrl" Text="{Binding BaseUrl, UpdateSourceTrigger=PropertyChanged}"/>
+    <TextBlock Text="MAPI-Key (solo in memoria)"/><PasswordBox x:Name="ApiKey" local:PasswordBinding.Value="{Binding ApiKey}" Padding="5" Margin="3"/>
+    <TextBlock Text="ID nodi separati da spazi"/><TextBox x:Name="NodeIds" Text="{Binding NodeIds, UpdateSourceTrigger=PropertyChanged}"/>
+    <TextBlock Text="Combinazioni concomitanti, una per riga"/><TextBox x:Name="Cases" Text="{Binding Cases, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="65"/>
+    <CheckBox x:Name="AnalysisReady" IsChecked="{Binding AnalysisReady}" Content="Risultati aggiornati e concomitanti" Margin="4,8"/>
+    <Button x:Name="ReadButton" Content="Leggi reazioni da MIDAS" Command="{Binding ReadMidasCommand}"/>
+   </StackPanel></ScrollViewer>
+   <Grid Grid.Column="1" Margin="6,8,0,0"><Grid.RowDefinitions><RowDefinition Height="2*"/><RowDefinition Height="3*"/></Grid.RowDefinitions>
+    <GroupBox Header="Reazioni: FZ positiva in compressione, momenti kN·m"><DataGrid x:Name="ReactionsGrid" ItemsSource="{Binding Reactions}" AutoGenerateColumns="True" CanUserAddRows="False" IsReadOnly="True"/></GroupBox>
+    <GroupBox Grid.Row="1" Header="Risultati delle verifiche implementate" Margin="0,10,0,0"><DataGrid x:Name="ResultsGrid" ItemsSource="{Binding Results}" AutoGenerateColumns="True" IsReadOnly="True" CanUserAddRows="False"/></GroupBox>
+   </Grid>
+  </Grid>
+ </DockPanel>
+</Window>

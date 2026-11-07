@@ -13,3 +13,9 @@ CSV semplice: intestazione `node,case,FX,FY,FZ,MX,MY,MZ`, separatore virgola o p
 L'output CLI e WPF contiene `input` e `report`, con versione del motore, unità, ambito e risultati per combinazione. Grandezze non applicabili vengono serializzate come `null`; leggere sempre esiti e messaggi. La riuscita dell'esecuzione CLI (exit code 0) significa elaborazione riuscita, non esito strutturale favorevole. Errori input: exit code 1; sintassi CLI errata: 2.
 
 L'adattatore MIDAS richiede il Base URL HTTPS da API Settings e la MAPI-Key in memoria. Esegue GET `db/NODE` e POST `post/TABLE` con `REACTIONG`, `KN`, `M`. Rifiuta redirect, colonne ambigue, risultati incompleti o fuori selezione. Il formato è derivato dal prototipo: va confrontato con la versione GEN NX effettivamente usata. Nessuna chiave viene salvata nei progetti o nelle relazioni.
+
+## Documenti della suite MVVM
+
+I moduli storici adattati usano un documento JSON con proprietà camelCase: schemaVersion (1), module (identificativo nel catalogo applicativo), fields (dizionario chiave/valore testuale), data (righe delimitate da punto e virgola, quando previste). Esempio in examples/sezione.json. Le chiavi ammesse e le unità sono definite dai ModuleField del servizio applicativo. Le letture rifiutano proprietà JSON sconosciute, moduli errati e versioni non supportate. I parametri numerici accettano punto o virgola decimale, senza separatore delle migliaia.
+
+BeamProject usa schemaVersion, name, sections e tendons: gli ultimi due sono array di documenti modulo completi. ModuleFiles è l'unico serializzatore di questi contratti; BeamProjectService ricostruisce le classi geometriche e i trefoli. I progetti plinti/MIDAS mantengono il contratto precedente, senza cambiamenti.

@@ -819,7 +819,7 @@ namespace STA.Carichi.Sisma
 
                 string[] corrente = righeConvertite[i];
 
-                Point3d puntoConf = new Point3d(corrente[0], Convert.ToDouble(corrente[1]), Convert.ToDouble(corrente[2]), 0);
+                Point3d puntoConf = new Point3d(corrente[0], double.Parse(corrente[1], System.Globalization.CultureInfo.InvariantCulture), double.Parse(corrente[2], System.Globalization.CultureInfo.InvariantCulture), 0);
 
                 distanzeProv[i - 2] = new distanzePunti(posizione, puntoConf);
 
@@ -903,6 +903,9 @@ namespace STA.Carichi.Sisma
                     Punti_DX_DOWN.Add(puntoProv);
                 }
             }
+
+            if (Punti_SX_UP.Count == 0 || Punti_SX_DOWN.Count == 0 || Punti_DX_UP.Count == 0 || Punti_DX_DOWN.Count == 0)
+                throw new ArgumentException("Coordinate esterne al reticolo sismico disponibile.");
 
             Point3d punto_SX_UP = new Point3d("SX_UP", 0,0,0);
             Point3d punto_SX_DOWN = new Point3d("SX_DOWN", 0,0,0);
@@ -989,7 +992,7 @@ namespace STA.Carichi.Sisma
                     if (i > 1)
                     {
                         ///Aggiunge il punto alla lista generale dei punti
-                        PuntiReticolo.Add(new Point3d(divisa[0], Double.Parse(divisa[1]), Double.Parse(divisa[2]), 0));
+                        PuntiReticolo.Add(new Point3d(divisa[0], double.Parse(divisa[1], System.Globalization.CultureInfo.InvariantCulture), double.Parse(divisa[2], System.Globalization.CultureInfo.InvariantCulture), 0));
                     }
 
                     righeProv.Add(divisa);

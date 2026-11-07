@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "module": "sezione",
+  "fields": {
+    "nome": "Rettangolo 30 x 50"
+  },
+  "data": "0;0\n30;0\n30;50\n0;50"
+}

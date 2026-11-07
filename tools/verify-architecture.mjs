@@ -19,3 +19,11 @@ const manifest=JSON.parse(fs.readFileSync('modules.json','utf8'));
 for(const m of manifest.modules){if(!fs.existsSync(m.project))throw Error(`Modulo assente ${m.id}`);}
 if(manifest.modules.length!==projects.filter(p=>p.startsWith('src'+path.sep)).length)throw Error('Catalogo incompleto');
 console.log(`PASS architettura: ${projects.length} progetti, riferimenti esistenti, nessun ciclo, core senza UI o DLL native`);
+
+for(const file of walk('apps/STA.Calcolo.Desktop/ViewModels').filter(p=>p.endsWith('.cs'))){
+ const text=fs.readFileSync(file,'utf8');if(/using System\.Windows|Microsoft\.Win32|InitializeComponent|MessageBox/.test(text))throw Error('ViewModel dipendente dalla View: '+file);
+}
+for(const file of walk('apps/STA.Calcolo.Desktop').filter(p=>p.endsWith('.xaml.cs')&&!p.endsWith('App.xaml.cs'))){
+ const text=fs.readFileSync(file,'utf8');if(!/public partial class \w+ : Window \{\s*public \w+\(\) \{\s*InitializeComponent\(\);\s*\}\s*\}/.test(text))throw Error('Logica nel code-behind: '+file);
+}
+console.log('PASS MVVM: ViewModel senza dipendenze dalle finestre; code-behind solo inizializzazione');

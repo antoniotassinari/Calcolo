@@ -10,15 +10,18 @@ Prerequisiti: SDK .NET 10; Windows per WPF. Node.js 24 serve ai test del prototi
 dotnet build Calcolo.sln -c Release
 dotnet run --project apps/STA.Calcolo.Desktop
 dotnet run --project apps/STA.Calcolo.Cli -- plinti examples/plinti-example.json risultati.json
+dotnet run --project apps/STA.Calcolo.Cli -- modulo examples/sezione.json sezione-risultati.json
 ```
 
-Nell'app: **Carica esempio**, modifica i parametri, importa le reazioni oppure leggile da MIDAS, quindi **Calcola**. L'esempio contiene dati sintetici, inclusi resistenza e attrito del terreno. Le reazioni importate devono essere in kN e kN·m, con Z globale verso l'alto. I parametri hanno unità esplicite. Salva progetto e risultati in JSON per riutilizzarli da altri programmi.
+Dalla finestra principale scegli uno degli 11 moduli. Materiali, carichi, sezioni e trefolature hanno parametri, calcolo, salvataggio e riapertura; sezioni, trefolature e sisma hanno grafici WPF. Il progetto travi importa i documenti salvati dagli editor di sezioni e trefolature. I plinti storici comprendono basi superficiali e pali rettangolari/triangolari, per singolo nodo o più nodi.
+
+Nel modulo **Plinti · reazioni e MIDAS**: **Carica esempio**, modifica i parametri, importa le reazioni oppure leggile da MIDAS, quindi **Calcola**. L'esempio contiene dati sintetici, inclusi resistenza e attrito del terreno. Le reazioni importate devono essere in kN e kN·m, con Z globale verso l'alto. I parametri hanno unità esplicite. Salva progetto e risultati in JSON per riutilizzarli da altri programmi.
 
 ## Struttura
 
 | Cartella | Contenuto |
 | --- | --- |
-| `src` | 13 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
+| `src` | 15 librerie portabili: contratti, materiali, geometria, sezioni, neve, vento, sisma, trefolatura, travi, plinti, I/O, MIDAS e base carichi |
 | `apps` | App WPF e CLI, entrambe collegate allo stesso motore plinti |
 | `tests` | Test C# senza pacchetti esterni e smoke WPF |
 | `examples` | Contratto JSON e reazioni CSV dimostrative |
@@ -26,7 +29,7 @@ Nell'app: **Carica esempio**, modifica i parametri, importa le reazioni oppure l
 | `archive/midas-plinti-web` | Prototipo recuperato dalla precedente chat, conservato per tracciabilità e confronto |
 | `tools` | Controllo dipendenze e confronto numerico C#/JavaScript |
 
-La soluzione principale compila solo i moduli attivi e i due host. `legacy/Calcolo.Legacy.sln` conserva la vecchia soluzione: alcune interfacce storiche richiedono COM, RibbonControlsLibrary, FsTaskButton o dipendenze Prism e non fanno parte della build principale. Il porting delle interfacce storiche non è completo; i relativi motori sono stati separati per consentirne il riuso.
+La soluzione principale compila solo i moduli attivi e i due host. `legacy/Calcolo.Legacy.sln` conserva la vecchia soluzione: alcune interfacce storiche richiedono COM, RibbonControlsLibrary, FsTaskButton o dipendenze Prism e non fanno parte della build principale. Le finestre attive sono nuove viste WPF/MVVM: nessun calcolo nel code-behind. La corrispondenza con le interfacce precedenti e i limiti di compatibilità sono in [Migrazione WPF](docs/WPF-MIGRATION.md).
 
 ## Verifiche
 

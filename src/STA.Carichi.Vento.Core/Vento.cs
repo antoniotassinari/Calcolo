@@ -267,9 +267,9 @@ namespace Vento
                 _CategoriaEsposizione = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("kr"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("Z0"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("Zmin"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("kr"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Z0"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Zmin"));
 
                 }
             }
@@ -755,7 +755,7 @@ namespace Vento
             AltezzaGeografica = 0;
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs("PosizioniPossibili"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PosizioniPossibili"));
             }
         }
 
@@ -1763,16 +1763,16 @@ namespace Vento
         private void AggiornaProprietà()
         {
 
-            PropertyChanged(this, new PropertyChangedEventArgs("ProprietàZona"));
-            PropertyChanged(this, new PropertyChangedEventArgs("RugositàPossibili"));
-            PropertyChanged(this, new PropertyChangedEventArgs("PosizioniPossibili"));
-            PropertyChanged(this, new PropertyChangedEventArgs("ClasseEsposizione"));
-            PropertyChanged(this, new PropertyChangedEventArgs("CeMin"));
-            PropertyChanged(this, new PropertyChangedEventArgs("CeMax"));
-            PropertyChanged(this, new PropertyChangedEventArgs("AltezzaGeoGrafica"));
-            PropertyChanged(this, new PropertyChangedEventArgs("VelocitàRiferimento"));
-            PropertyChanged(this, new PropertyChangedEventArgs("PressioneRiferimento"));
-            PropertyChanged(this, new PropertyChangedEventArgs("PressioneMassima"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ProprietàZona"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RugositàPossibili"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PosizioniPossibili"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ClasseEsposizione"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CeMin"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CeMax"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AltezzaGeoGrafica"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("VelocitàRiferimento"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PressioneRiferimento"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PressioneMassima"));
 
         }
 

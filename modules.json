@@ -2,6 +2,21 @@
   "schemaVersion": 1,
   "modules": [
     {
+      "id": "STA.Calcolo.Application",
+      "project": "src/STA.Calcolo.Application/STA.Calcolo.Application.csproj",
+      "dependencies": [
+        "STA.Materiali",
+        "STA.Carichi.Neve.Core",
+        "STA.Carichi.Vento.Core",
+        "STA.Carichi.Sisma.Core",
+        "STA.Geometria.Masse.Core",
+        "STA.Prefabbricato.Trefolatura.Core",
+        "STA.Prefabbricato.Trave.Core",
+        "STA.Calcolo.IO",
+        "STA.Plinti.Storici.Core"
+      ]
+    },
+    {
       "id": "STA.Calcolo.Contracts",
       "project": "src/STA.Calcolo.Contracts/STA.Calcolo.Contracts.csproj",
       "dependencies": []
@@ -64,6 +79,13 @@
       "project": "src/STA.Plinti.Core/STA.Plinti.Core.csproj",
       "dependencies": [
         "STA.Calcolo.Contracts"
+      ]
+    },
+    {
+      "id": "STA.Plinti.Storici.Core",
+      "project": "src/STA.Plinti.Storici.Core/STA.Plinti.Storici.Core.csproj",
+      "dependencies": [
+        "STA.Geometria.Core"
       ]
     },
     {

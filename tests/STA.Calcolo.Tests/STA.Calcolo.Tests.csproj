@@ -8,4 +8,4 @@
   <ProjectReference Include="../../src/STA.Materiali/STA.Materiali.csproj" />
  </ItemGroup>
  <ItemGroup><Content Include="../../examples/plinti-example.json" Link="plinti-example.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
-</Project>
+<ItemGroup><ProjectReference Include="../../src/STA.Calcolo.Application/STA.Calcolo.Application.csproj" /></ItemGroup></Project>

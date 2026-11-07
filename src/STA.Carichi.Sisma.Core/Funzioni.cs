@@ -273,11 +273,15 @@ namespace STA.Carichi.Sisma.Funzioni
 
             val01 = val01 + i;
             val02 = val02 + i;
-            ag01 = Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val01)) + rapporto * (Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val02)) - Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val01)));
-            ag02 = Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val01)) + rapporto * (Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val02)) - Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val01)));
-            ag03 = Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val01)) + rapporto * (Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val02)) - Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val01)));
-            ag04 = Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val01)) + rapporto * (Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val02)) - Convert.ToDouble(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val01)));
+            ag01 = double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture) + rapporto * (double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val02), System.Globalization.CultureInfo.InvariantCulture) - double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[0].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture));
+            ag02 = double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture) + rapporto * (double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val02), System.Globalization.CultureInfo.InvariantCulture) - double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[1].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture));
+            ag03 = double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture) + rapporto * (double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val02), System.Globalization.CultureInfo.InvariantCulture) - double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[2].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture));
+            ag04 = double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture) + rapporto * (double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val02), System.Globalization.CultureInfo.InvariantCulture) - double.Parse(prelevaValore(sismaIn, sismaIn.elencoDistanze[3].puntoEst, val01), System.Globalization.CultureInfo.InvariantCulture));
 
+
+            var values = new[] { ag01, ag02, ag03, ag04 };
+            for (int index = 0; index < 4; index++)
+                if (sismaIn.elencoDistanze[index].distanzaPunti == 0) return values[index];
 
             double agMedia = (ag01 / sismaIn.elencoDistanze[0].distanzaPunti + ag02 / sismaIn.elencoDistanze[1].distanzaPunti + ag03 / sismaIn.elencoDistanze[2].distanzaPunti + ag04 / sismaIn.elencoDistanze[3].distanzaPunti) / (1 / sismaIn.elencoDistanze[0].distanzaPunti + 1 / sismaIn.elencoDistanze[1].distanzaPunti + 1 / sismaIn.elencoDistanze[2].distanzaPunti + 1 / sismaIn.elencoDistanze[3].distanzaPunti);
 
