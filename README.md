@@ -1,4 +1,4 @@
-# Calcolo · utility STA
+# Calcolo · utility TA
 
 Librerie C# .NET 10 riutilizzabili per calcolo strutturale, con applicazione WPF e interfaccia a riga di comando. Il modulo plinti importa reazioni da CSV, JSON o API MIDAS GEN NX e usa un solo motore di calcolo.
 
