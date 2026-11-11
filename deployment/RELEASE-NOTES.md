@@ -1,10 +1,8 @@
-TA-Calcolo 1.3.0: relazioni Word e PDF e risultati del confronto riorganizzati.
+TA-Calcolo 1.3.1: layout compatto del modulo Muratura e cerchiatura.
 
-- Relazione Word .docx modificabile e PDF generato direttamente, senza richiedere Microsoft Word.
-- A4 verticale con margini di 15 mm, logo Tassinari Associati, due schede maschio affiancate per pagina e numerazione.
-- Confronto dei totali prima/dopo/telaio/finale, dati e materiali, coefficienti, risultati di ciascun maschio, cerchiatura e metodo.
-- Percorso di calcolo dopo la sintesi: formule ingegneristiche numerate, frazioni, simboli, unità e sostituzioni numeriche; equazioni modificabili in Word.
-- Tabelle a video separate per stato, una riga per maschio, numeri italiani e legenda delle grandezze.
-- Esportazioni generate dai dati validati del progetto; invalidazione dopo modifiche. Servizi di relazione separati dai ViewModel.
+- Configurazione e carico superiore limitati alla larghezza di tre colonne dei maschi.
+- Caratteristiche tabellari e di progetto affiancate per fm, τ, E e G, con aggiornamento dei valori al variare dei parametri.
+- Eliminato il blocco separato Caratteristiche corrette.
+- Tabelle dei risultati senza griglia e linee delle frazioni limitate alla larghezza delle formule.
 
-Scaricare **TA-Calcolo-Setup-1.3.0-win-x64.exe** oppure usare l’aggiornamento automatico. Il file STA-Calcolo-Update è riservato all’aggiornatore.
+Scaricare **TA-Calcolo-Setup-1.3.1-win-x64.exe** oppure usare Verifica aggiornamenti e riavviare l’app. Il file STA-Calcolo-Update è riservato all’aggiornatore.

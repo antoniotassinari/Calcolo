@@ -1,4 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
- <PropertyGroup><ApplicationIcon>../STA.Calcolo.Desktop/Assets/Brand/App.ico</ApplicationIcon><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF><Product>TA-Calcolo</Product><Company>Tassinari Associati</Company><Title>TA-Calcolo</Title><Version>1.3.0</Version></PropertyGroup>
+ <PropertyGroup><ApplicationIcon>../STA.Calcolo.Desktop/Assets/Brand/App.ico</ApplicationIcon><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF><Product>TA-Calcolo</Product><Company>Tassinari Associati</Company><Title>TA-Calcolo</Title><Version>1.3.1</Version></PropertyGroup>
  <ItemGroup><ProjectReference Include="../../src/STA.Calcolo.Updates.Core/STA.Calcolo.Updates.Core.csproj"/><Compile Include="../STA.Calcolo.Desktop/Infrastructure/ObservableObject.cs" Link="Infrastructure/ObservableObject.cs"/></ItemGroup>
 </Project>
