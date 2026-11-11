@@ -1,6 +1,11 @@
 name: Installer Windows
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Pubblica una release stabile completa (solo da master)'
+        type: boolean
+        default: false
   push:
     tags: ['v*']
 permissions:
@@ -56,13 +61,17 @@ jobs:
           path: artifacts/installer/*
           if-no-files-found: error
       - name: Pubblica release stabile completa
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/master')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           $tag="v$env:APP_VERSION"
           gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
           if($LASTEXITCODE -eq 0){throw 'Release già presente: non sovrascrivere i pacchetti pubblicati'}
+          if($env:GITHUB_REF_TYPE -ne 'tag'){
+            gh api "repos/$env:GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$tag" -f "sha=$env:GITHUB_SHA"
+            if($LASTEXITCODE -ne 0){throw 'Creazione tag fallita: controllare che la versione non esista già'}
+          }
           gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "TA-Calcolo $env:APP_VERSION" --notes-file deployment/RELEASE-NOTES.md
           if($LASTEXITCODE -ne 0){throw 'Creazione release fallita'}
           $files=@(Get-ChildItem artifacts/installer -File | Select-Object -ExpandProperty FullName)
