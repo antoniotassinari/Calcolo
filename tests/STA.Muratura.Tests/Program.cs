@@ -34,3 +34,32 @@ var old=MasonryFiles.Write(sample).Replace("\"fmBase\": 260","\"fm\": 192.592592
 Near(MasonryCalculator.Total(MasonryFiles.Read(old).Before).K,MasonryCalculator.Total(sample.Before).K);
 Assert(ProfileCatalog.All.Count==66);Assert(MasonryCatalog.All.Count==8);Assert(FrameCalculator.StiffnessAccepts(15));Assert(!FrameCalculator.StiffnessAccepts(15.00001));
 Console.WriteLine($"PASS {count} confronti numerici JavaScript/C#, cataloghi condivisi, importazione legacy, round trip e dati non validi");
+
+var beforeMulti=MasonryCalculator.Total(sample.Before);var afterMulti=MasonryCalculator.Total(sample.After);
+var first=sample.Frame with {Enabled=true,Profile="HEA 180"};
+var second=first with {Profile="IPE 200",H=240};
+var one=FrameCalculator.Calculate(first,beforeMulti,afterMulti)!;
+var two=FrameCalculator.Calculate(second,beforeMulti,afterMulti)!;
+var group=FrameGroupCalculator.Calculate([first,second],beforeMulti,afterMulti);
+Near(group.FinalK,afterMulti.K+one.K+two.K);Near(group.FinalV,afterMulti.Vt+one.Veff+two.Veff);
+Near(FrameGroupCalculator.Calculate([first,second with {Enabled=false}],beforeMulti,afterMulti).FinalK,one.FinalK);
+var multiple=sample with {Version=3,Frame=first,AdditionalFrames=[second]};
+var roundtrip=MasonryFiles.Read(MasonryFiles.Write(multiple));
+Assert(roundtrip.Version==3&&roundtrip.AdditionalFrames.Single().Profile=="IPE 200");
+Near(FrameGroupCalculator.Calculate(roundtrip.AllFrames,beforeMulti,afterMulti).FinalV,group.FinalV);
+Reject(()=>MasonryFiles.Validate(multiple with {AdditionalFrames=[second with {H=0}]}));
+Reject(()=>MasonryFiles.Read(MasonryFiles.Write(multiple).Replace("\"additionalFrames\": [","\"additionalFrames\": [null,")));
+// Search each family against an independent exhaustive sum of the other frame and candidate.
+var proposals=FrameCalculator.Design(first,beforeMulti,FrameGroupCalculator.IncludeOthers([second],beforeMulti,afterMulti));
+foreach(var proposal in proposals)
+{
+    var valid=ProfileCatalog.All.Where(p=>p.Family==proposal.Family).OrderBy(p=>p.Size).Where(p=>{
+        var candidate=FrameCalculator.Calculate(first with {Profile=p.Id},beforeMulti,afterMulti)!;
+        return FrameCalculator.StiffnessAccepts(((afterMulti.K+two.K+candidate.K)/beforeMulti.K-1)*100)&&afterMulti.Vt+two.Veff+candidate.Veff>beforeMulti.Vt;
+    }).ToArray();
+    Assert(proposal.ValidCount==valid.Length);Assert(proposal.Candidate?.Profile.Id==valid.FirstOrDefault()?.Id);
+    if(proposal.Candidate is {} candidate){Near(candidate.FinalK,afterMulti.K+two.K+candidate.K);Near(candidate.FinalV,afterMulti.Vt+two.Veff+candidate.Veff);}
+}
+var huge=second with {Profile="HEB 1000",NProfiles=1000};
+Assert(FrameCalculator.Design(first,beforeMulti,FrameGroupCalculator.IncludeOthers([huge],beforeMulti,afterMulti)).All(p=>p.Candidate==null));
+Console.WriteLine("PASS cerchiature multiple: contributi, esclusione, JSON e ricerca con altri telai");

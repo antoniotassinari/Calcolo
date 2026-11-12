@@ -6,6 +6,8 @@ namespace STA.Calcolo.Desktop.ViewModels;
 public sealed class FrameViewModel : ObservableObject
 {
     private readonly MasonryFieldsViewModel editor;
+    private string label="Cerchiatura";
+    public string Label {get=>label;set=>Set(ref label,value);}
     public IReadOnlyList<ModuleFieldViewModel> Fields=>editor.Fields;
     public IReadOnlyDictionary<string,ModuleFieldViewModel> ByKey=>editor.ByKey;
     public SteelProfileViewModel Profile {get;}
@@ -19,7 +21,7 @@ public sealed class FrameViewModel : ObservableObject
     {
         editor=new(model,[("Enabled","Includi cerchiatura",["No","Sì"]),("Profile","Profilo OPPO",ProfileCatalog.All.Select(x=>x.Id).ToArray()),("H","Altezza telaio [cm]",null),("NColumns","Numero colonne",null),("NProfiles","Profili per colonna",null),("E","E acciaio [daN/cm²]",null),("Fy","fyk [MPa]",null),("Gamma","γM0",null),("Portal","Schema del portale",["Chiuso","Aperto"])]);
         Profile=new(ByKey["Profile"]);
-        DesignCommand=new(()=>{try{calculate();var pair=states();Proposals=FrameCalculator.Design(Build(),pair.Before,pair.After);Changed(nameof(Proposals));status("Ricerca completata: selezionare una proposta disponibile.");}catch(Exception e){ClearProposals();status(e.Message);}});
+        DesignCommand=new(()=>{try{calculate();var pair=states();Proposals=FrameCalculator.Design(Build(),pair.Before,pair.After);Changed(nameof(Proposals));status("Ricerca completata considerando le altre cerchiature attive: selezionare una proposta disponibile.");}catch(Exception e){ClearProposals();status(e.Message);}});
         UseProfileCommand=new(()=>{var id=SelectedProposal!.Candidate!.Profile.Id;Profile.SelectedId=id;calculate();},()=>SelectedProposal?.Candidate!=null);
         editor.PropertyChanged+=(_,_)=>{Changed(nameof(Fields));Changed(nameof(Enabled));};
     }

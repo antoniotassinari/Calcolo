@@ -14,12 +14,20 @@ var bold=File.ReadAllBytes(Path.Combine(fontDirectory,OperatingSystem.IsWindows(
 var example=MasonryFiles.Example();var many=new MasonryProject{Title="Confronto completo con dieci maschi prima e dieci dopo"};
 many.Before=Enumerable.Range(0,10).Select(i=>{var p=MasonryCalculator.Preset(new(),MasonryCatalog.All[i%8].Id,i%2==0?"LC1":"LC2");p.Rho??=1400;p.Cracked=i%2==0;p.LoadMode="linear";p.Q=45+i;return p;}).ToArray();
 many.After=many.Before.Select((p,i)=>p with {L=200+i*20,C=[1.1,1.2,1,1,.9,1,1]}).ToArray();many.Frame=example.Frame with {Profile="HEB 1000"};
-foreach(var (name,p) in new[]{("esempio",example),("20-maschi",many),("senza-telaio",example with {Frame=example.Frame with {Enabled=false}})})
+var multi=example with {Version=3,AdditionalFrames=[example.Frame with {Enabled=true,Profile="IPE 200",H=240},example.Frame with {Enabled=false}]};
+foreach(var (name,p) in new[]{("piu-cerchiature",multi),("esempio",example),("20-maschi",many),("senza-telaio",example with {Frame=example.Frame with {Enabled=false}})})
 {
     var data=MasonryReportBuilder.Build(p,new(2026,11,7));var compare=MasonryReportBuilder.Compare(p);
     Assert(compare.Length==2&&MasonryReportBuilder.Piers(p).Length==p.Before.Length+p.After.Length,"Missing rows");
     Assert(compare.All(r=>Math.Abs(r.Finale-r.Dopo-r.Telaio)<1e-6),"Final equilibrium");
     Assert(data.Pages.Sum(page=>page.Cards.Count)==p.Before.Length+p.After.Length,"Missing pier cards");
+    if(p.AdditionalFrames.Length>0)
+    {
+        Assert(data.Pages.Count(page=>page.Title.StartsWith("Cerchiatura "))==3,"Missing frame pages");
+        Assert(data.Pages.SelectMany(page=>page.Equations??[]).Any(e=>e.Title.Contains("Cerchiatura 2")),"Missing second frame derivation");
+        var expected=FrameGroupCalculator.Calculate(p.AllFrames,MasonryCalculator.Total(p.Before),MasonryCalculator.Total(p.After));
+        Assert(Math.Abs(compare[0].Finale-expected.FinalK)<1e-6&&Math.Abs(compare[1].Finale-expected.FinalV)<1e-6,"Incorrect aggregate report");
+    }
     var docx=WordReportWriter.Write(data,logo);using var zip=new ZipArchive(new MemoryStream(docx));
     using var xml=zip.GetEntry("word/document.xml")!.Open();var doc=XDocument.Load(xml);XNamespace w="http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     Assert(doc.Descendants(w+"pgSz").Single().Attribute(w+"w")!.Value=="11906","Not A4");

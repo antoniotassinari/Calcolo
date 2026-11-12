@@ -28,3 +28,11 @@ La parità numerica verifica la fedeltà al codice acquisito, non certifica le f
 La struttura delle classi è descritta in [Componenti MVVM](MVVM-CERCHIATURE.md): Model, ViewModel e View distinti per materiali, maschi, profili e cerchiature.
 
 Dettagli di contenuto e impaginazione: [Relazioni Word e PDF](RELAZIONI.md).
+
+## Più cerchiature (1.3.2)
+
+Nel pannello Cerchiature, il pulsante **Aggiungi cerchiatura** crea un nuovo telaio attivo con parametri indipendenti. Selezionare la cerchiatura dall’elenco per modificare profilo, altezza, colonne, acciaio e schema; **Rimuovi cerchiatura selezionata** elimina il telaio scelto, mantenendone almeno uno. La spunta di inclusione permette di escludere un telaio senza cancellarlo.
+
+La ricerca del profilo si applica al telaio selezionato, mantenendo fissi i profili degli altri telai attivi. Ogni candidato è valutato sul confronto complessivo: K finale = K muratura dopo + somma K telai; V finale = V muratura dopo + somma Veff telai. Veff è mobilitato per ogni telaio allo stesso du disponibile della muratura dopo. Non è una ricerca simultanea di combinazioni di profili. Modificando un telaio si invalidano tutte le proposte.
+
+Il formato JSON 3 conserva tutte le cerchiature ed è incompatibile con le versioni precedenti; i vecchi progetti con un solo telaio si aprono normalmente. Le relazioni riportano ogni telaio numerato e il confronto complessivo. Il modello rimane quello semplificato delle colonne, senza verifiche di traversi, collegamenti e ancoraggi.

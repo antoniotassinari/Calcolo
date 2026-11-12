@@ -8,7 +8,7 @@ public static class MasonryDerivation
     {
         MasonryFiles.Validate(p);
         var a=MasonryCalculator.Total(p.Before);var b=MasonryCalculator.Total(p.After);
-        var f=FrameCalculator.Calculate(p.Frame,a,b);var c=MasonryReportBuilder.Compare(p);
+        var group=FrameGroupCalculator.Calculate(p.AllFrames,a,b);var c=MasonryReportBuilder.Compare(p);
         string N(double x)=>MasonryReportBuilder.Number(x);
         List<ReportEquation> equations=[
             new("(1) Geometria e carico", "Aᵢ", "lᵢ · tᵢ", "", "A in cm²; l, t, h in cm. Nᵢ = qᵢ · lᵢ / 100 [kN] se si usa q [kN/m]; altrimenti Nᵢ è il carico assegnato."),
@@ -20,14 +20,18 @@ public static class MasonryDerivation
             new("(7) Spostamento al raggiungimento del taglio", "dᵧ,ᵢ", "10000 · Vₜ,ᵢ", "Kᵢ", "dᵧ in mm. Il fattore 10000 combina kN → N e cm → mm."),
             new("(8) Spostamento ultimo del modello originale", "dᵤ,ᵢ", "0,004 · max[1; min(2; hᵢ/lᵢ − 0,5)] · hᵢ · 10", "", "dᵤ in mm; per lo stato si assume min(dᵤ,ᵢ). Interpolazione del foglio originale, non criterio generale degli Eurocodici.")
         ];
-        if(f!=null) equations.AddRange([
-            new("(9) Rigidezza della cerchiatura", "Kf", "nₚ · nc · α · Eₛ · 10 · Jₓ", "hf³", "K in N/cm; Eₛ in daN/cm², Jₓ in cm⁴, h in cm; nₚ profili per colonna, nc colonne; α = 12 portale chiuso, 3 aperto.", $"K telaio = {N(f.K)} N/cm"),
-            new("(10) Resistenza massima della cerchiatura", "Vf", "2 · nc · fᵧₖ · 10 · (nₚ · Wₓ)", "γM0 · hf · 100", "V in kN; fᵧₖ in MPa, Wₓ in cm³. Modello delle colonne sull’asse forte del foglio originale.", $"V telaio = {N(f.V)} kN"),
-            new("(11) Contributo effettivamente mobilitato", "Vf,eff", "min[Vf; Vf · dᵤ,dopo / dᵧ,f]", "", "dᵧ,f = 10000 · Vf / Kf [mm]; dᵤ,dopo è il minimo dei maschi dopo l’intervento.", $"min[{N(f.V)}; {N(f.V)} × {N(f.AvailableDu)} / {N(f.Dy)}] = {N(f.Veff)} kN")
+        for(int index=0;index<group.Frames.Length;index++)
+        {
+            var f=group.Frames[index];if(f==null)continue;
+            equations.AddRange([
+            new($"(9) Cerchiatura {index+1} · rigidezza", "Kf", "nₚ · nc · α · Eₛ · 10 · Jₓ", "hf³", "K in N/cm; Eₛ in daN/cm², Jₓ in cm⁴, h in cm; nₚ profili per colonna, nc colonne; α = 12 portale chiuso, 3 aperto.", $"K telaio = {N(f.K)} N/cm"),
+            new($"(10) Cerchiatura {index+1} · resistenza massima", "Vf", "2 · nc · fᵧₖ · 10 · (nₚ · Wₓ)", "γM0 · hf · 100", "V in kN; fᵧₖ in MPa, Wₓ in cm³. Modello delle colonne sull’asse forte del foglio originale.", $"V telaio = {N(f.V)} kN"),
+            new($"(11) Cerchiatura {index+1} · contributo mobilitato", "Vf,eff", "min[Vf; Vf · dᵤ,dopo / dᵧ,f]", "", "dᵧ,f = 10000 · Vf / Kf [mm]; dᵤ,dopo è il minimo dei maschi dopo l’intervento.", $"min[{N(f.V)}; {N(f.V)} × {N(f.AvailableDu)} / {N(f.Dy)}] = {N(f.Veff)} kN")
         ]);
+        }
         equations.AddRange([
-            new("(12) Somma delle rigidezze", "Kfinale", "Σ Kᵢ,dopo + Kf", "", "Kprima = Σ Kᵢ,prima; contributo telaio nullo se disattivato.", $"Prima: {string.Join(" + ",a.Rows.Select(r=>N(r.K)))} = {N(a.K)} N/cm\nFinale: {N(b.K)} + {N(f?.K??0)} = {N(c[0].Finale)} N/cm"),
-            new("(13) Somma delle resistenze", "Vfinale", "Σ Vₜ,ᵢ,dopo + Vf,eff", "", "Vprima = Σ Vₜ,ᵢ,prima. Somma dei tagli, non curva a spostamento compatibile.", $"Prima: {string.Join(" + ",a.Rows.Select(r=>N(r.Vt)))} = {N(a.Vt)} kN\nFinale: {N(b.Vt)} + {N(f?.Veff??0)} = {N(c[1].Finale)} kN"),
+            new("(12) Somma delle rigidezze", "Kfinale", "Σ Kᵢ,dopo + Σ Kf", "", "Kprima = Σ Kᵢ,prima; contributo telaio nullo se disattivato.", $"Prima: {string.Join(" + ",a.Rows.Select(r=>N(r.K)))} = {N(a.K)} N/cm\nFinale: {N(b.K)} + {N(group.K)} = {N(c[0].Finale)} N/cm"),
+            new("(13) Somma delle resistenze", "Vfinale", "Σ Vₜ,ᵢ,dopo + Σ Vf,eff", "", "Vprima = Σ Vₜ,ᵢ,prima. Somma dei tagli, non curva a spostamento compatibile.", $"Prima: {string.Join(" + ",a.Rows.Select(r=>N(r.Vt)))} = {N(a.Vt)} kN\nFinale: {N(b.Vt)} + {N(group.Veff)} = {N(c[1].Finale)} kN"),
             new("(14) Variazione della rigidezza", "ΔK [%]", "100 · (Kfinale − Kprima)", "Kprima", "Criterio di confronto adottato dal programma: −15% ≤ ΔK ≤ +15%.", $"100 × ({N(c[0].Finale)} − {N(a.K)}) / {N(a.K)} = {N(c[0].Variazione)} %"),
             new("(15) Variazione della resistenza", "ΔV [%]", "100 · (Vfinale − Vprima)", "Vprima", "Criterio di confronto adottato dal programma: ΔV ≥ 0%.", $"100 × ({N(c[1].Finale)} − {N(a.Vt)}) / {N(a.Vt)} = {N(c[1].Variazione)} %")
         ]);
