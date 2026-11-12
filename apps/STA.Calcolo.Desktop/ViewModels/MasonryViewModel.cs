@@ -26,7 +26,11 @@ public sealed class MasonryViewModel : ObservableObject
     public ObservableCollection<MasonryPierViewModel> Before {get;}=[];
     public ObservableCollection<MasonryPierViewModel> After {get;}=[];
     private string title="Confronto maschi murari";public string Title {get=>title;set{if(Set(ref title,value))Invalidate();}}
-    public FrameViewModel Frame {get;private set;}=null!;
+    public ObservableCollection<FrameViewModel> Frames {get;}=[];
+    private FrameViewModel frame=null!;
+    public FrameViewModel Frame {get=>frame;set{if(value!=null&&Set(ref frame,value)){Changed(nameof(FrameEnabled));Changed(nameof(DesignCommand));Changed(nameof(UseProfileCommand));Changed(nameof(Proposals));Changed(nameof(SelectedProposal));}}}
+    public RelayCommand AddFrameCommand {get;}
+    public RelayCommand RemoveFrameCommand {get;}
     public IReadOnlyList<MasonryMaterial> Materials=>MasonryCatalog.All;
     public string MaterialId {get;set;}="mattoni-calce";
     public string Level {get;set;}="LC1";
@@ -46,6 +50,8 @@ public sealed class MasonryViewModel : ObservableObject
     public RelayCommand EqualBeforeCommand{get;} public RelayCommand EqualAfterCommand{get;}
     public MasonryViewModel(IFileService files,IMasonryReportService? reportService=null)
     {
+        AddFrameCommand=new(()=>Run(()=>{AddFrame(new FrameInput{Enabled=true});Frame=Frames.Last();RefreshFrames();Invalidate();}));
+        RemoveFrameCommand=new(()=>Run(()=>{if(Frames.Count>1){var index=Frames.IndexOf(Frame);Frames.Remove(Frame);Frame=Frames[Math.Min(index,Frames.Count-1)];RefreshFrames();Invalidate();}}),()=>Frames.Count>1);
         this.files=files;var reports=reportService??new MasonryReportService();
         AddBeforeCommand=new(()=>Run(()=>Add(Before,MasonryCalculator.Preset(new(),MaterialId,Level))));AddAfterCommand=new(()=>Run(()=>Add(After,MasonryCalculator.Preset(new(),MaterialId,Level))));
         CopyCommand=new(()=>Run(()=>{var data=Before.Select(x=>x.Build()).ToArray();After.Clear();foreach(var p in data)Add(After,p with {C=[..p.C]});}));
@@ -54,7 +60,7 @@ public sealed class MasonryViewModel : ObservableObject
         EqualBeforeCommand=new(()=>Run(()=>Equal(Before)));EqualAfterCommand=new(()=>Run(()=>Equal(After)));
         CalculateCommand=new(()=>Run(Calculate));
         OpenCommand=new(()=>Run(()=>{var path=files.Open("Progetto muratura (anche dal sito)|*.json");if(path!=null){var text=files.Read(path);Load(MasonryFiles.Read(text));Status="Progetto aperto. Altezza efficace = altezza geometrica; controllare eventuali altezze efficaci del progetto originale.";}}));
-        SaveCommand=new(()=>Run(()=>{var text=MasonryFiles.Write(Build());var path=files.Save("Progetto muratura|*.json","confronto-maschi.json");if(path!=null){files.Write(path,text);Status="Progetto salvato, compatibile con il sito.";}}));
+        SaveCommand=new(()=>Run(()=>{var text=MasonryFiles.Write(Build());var path=files.Save("Progetto muratura|*.json","confronto-maschi.json");if(path!=null){files.Write(path,text);Status="Progetto salvato. I progetti con più cerchiature richiedono TA-Calcolo 1.3.2 o successivo.";}}));
         ExportCommand=new(()=>Run(()=>{var path=files.Save("Risultati JSON|*.json","muratura-risultati.json");if(path!=null)files.Write(path,ModuleFiles.Write(new{Input=Build(),Results}));}),()=>Results.Count>0);
         ReportCommand=new(()=>Run(()=>{var p=Build();var path=files.Save("Relazione PDF|*.pdf","relazione-maschi.pdf");if(path!=null){files.WriteBytes(path,reports.Pdf(p));Status="Relazione PDF salvata in formato A4 con margini di 15 mm.";}}),()=>Results.Count>0);
         WordReportCommand=new(()=>Run(()=>{var p=Build();var path=files.Save("Relazione Word|*.docx","relazione-maschi.docx");if(path!=null){files.WriteBytes(path,reports.Word(p));Status="Relazione Word modificabile salvata in formato A4 con margini di 15 mm.";}}),()=>Results.Count>0);
@@ -66,13 +72,25 @@ public sealed class MasonryViewModel : ObservableObject
         if(list.Count>=10)throw new ArgumentException("Massimo 10 maschi per stato.");
         var item=new MasonryPierViewModel(p,"Maschio",row=>{if(list.Count>1){list.Remove(row);RefreshRows(list);Invalidate();}else Status="Mantenere almeno un maschio per stato.";});item.PropertyChanged+=(_,e)=>{if(e.PropertyName=="Editor")SyncHeights(list,ReferenceEquals(list,Before)?EqualBefore:EqualAfter);Invalidate();};list.Add(item);RefreshRows(list);Invalidate();
     }
+    private void AddFrame(FrameInput input)
+    {
+        FrameViewModel item=null!;
+        item=new(input,()=>{
+            var a=MasonryCalculator.Total(Before.Select(p=>p.Build()).ToArray());
+            var b=MasonryCalculator.Total(After.Select(p=>p.Build()).ToArray());
+            return (a,FrameGroupCalculator.IncludeOthers(Frames.Where(f=>!ReferenceEquals(f,item)).Select(f=>f.Build()),a,b));
+        },Calculate,message=>Status=message);
+        item.PropertyChanged+=(_,e)=>{if(!Frames.Contains(item))return;if(e.PropertyName is "Fields" or "Enabled"){Changed(nameof(FrameEnabled));Invalidate();}else if(ReferenceEquals(item,Frame)){Changed(nameof(Proposals));Changed(nameof(SelectedProposal));}};
+        Frames.Add(item);
+    }
+    private void RefreshFrames(){for(int i=0;i<Frames.Count;i++)Frames[i].Label=$"Cerchiatura {i+1}";RemoveFrameCommand.Refresh();}
     public void Load(MasonryProject p)
     {
         equalBefore=false;equalAfter=false;
         Title=p.Title;Before.Clear();After.Clear();foreach(var row in p.Before)Add(Before,row);foreach(var row in p.After)Add(After,row);
-        Frame=new(p.Frame,()=> (MasonryCalculator.Total(Before.Select(p=>p.Build()).ToArray()),MasonryCalculator.Total(After.Select(p=>p.Build()).ToArray())),()=>Run(Calculate),message=>Status=message);Frame.PropertyChanged+=(_,e)=>{if(e.PropertyName is "Fields" or "Enabled"){Changed(nameof(FrameEnabled));Invalidate();}else {Changed(nameof(Proposals));Changed(nameof(SelectedProposal));}};Changed(nameof(DesignCommand));Changed(nameof(UseProfileCommand));Changed(nameof(Frame));Changed(nameof(FrameEnabled));EqualBefore=p.EqualHeights?.GetValueOrDefault("before")??false;EqualAfter=p.EqualHeights?.GetValueOrDefault("after")??false;Invalidate();
+        Frames.Clear();foreach(var input in p.AllFrames)AddFrame(input);Frame=Frames[0];RefreshFrames();EqualBefore=p.EqualHeights?.GetValueOrDefault("before")??false;EqualAfter=p.EqualHeights?.GetValueOrDefault("after")??false;Invalidate();
     }
-    public MasonryProject Build(){var frame=Frame.Build();return new(){Title=Title,Before=Before.Select(p=>p.Build()).ToArray(),After=After.Select(p=>p.Build()).ToArray(),Frame=frame,EqualHeights=new(){["before"]=EqualBefore,["after"]=EqualAfter}};}
+    public MasonryProject Build(){var inputs=Frames.Select(f=>f.Build()).ToArray();return new(){Version=inputs.Length>1?3:2,Title=Title,Before=Before.Select(p=>p.Build()).ToArray(),After=After.Select(p=>p.Build()).ToArray(),Frame=inputs[0],AdditionalFrames=inputs.Skip(1).ToArray(),EqualHeights=new(){["before"]=EqualBefore,["after"]=EqualAfter}};}
     private void Calculate()
     {
         Invalidate();var p=Build();MasonryFiles.Validate(p);var a=MasonryCalculator.Total(p.Before);var b=MasonryCalculator.Total(p.After);
@@ -82,11 +100,16 @@ public sealed class MasonryViewModel : ObservableObject
             rows.Add(new(name+" · K totale",state.K,"N/cm"));rows.Add(new(name+" · ΣVt",state.Vt,"kN"));rows.Add(new(name+" · du minimo",state.Du,"mm"));
             for(int i=0;i<state.Rows.Length;i++){var r=state.Rows[i];string label=$"{name} / {i+1}";rows.AddRange([new(label+" · N",r.N,"kN"),new(label+" · σ",r.Sigma,"N/cm²"),new(label+" · b",r.B,""),new(label+" · K",r.K,"N/cm"),new(label+" · Vt",r.Vt,"kN"),new(label+" · dy",r.Dy,"mm"),new(label+" · du",r.Du,"mm")]);}
         }
-        var f=FrameCalculator.Calculate(p.Frame,a,b);double dk=((f?.FinalK??b.K)/a.K-1)*100,dv=((f?.FinalV??b.Vt)/a.Vt-1)*100;
+        var total=FrameGroupCalculator.Calculate(p.AllFrames,a,b);double dk=(total.FinalK/a.K-1)*100,dv=(total.FinalV/a.Vt-1)*100;
         rows.AddRange([new("ΔK finale / prima",dk,"%"),new("ΔV finale / prima",dv,"%")]);
-        if(f!=null){rows.AddRange([new("Telaio · J colonna",f.J,"cm⁴"),new("Telaio · W colonna",f.W,"cm³"),new("Telaio · V massimo",f.V,"kN"),new("Telaio · K",f.K,"N/cm"),new("Telaio · dy",f.Dy,"mm"),new("Telaio · Veff mobilitato",f.Veff,"kN"),new("Finale · V",f.FinalV,"kN"),new("Finale · K",f.FinalK,"N/cm")]);if(f.Wstar is double w)rows.Add(new("W* (ipotesi due colonne)",w,"cm³"));}
+        for(int n=0;n<total.Frames.Length;n++)
+        {
+            var f=total.Frames[n];if(f==null)continue;string label=$"Cerchiatura {n+1} · {f.Profile.Id}";
+            rows.AddRange([new(label+" · J colonna",f.J,"cm⁴"),new(label+" · W colonna",f.W,"cm³"),new(label+" · V massimo",f.V,"kN"),new(label+" · K",f.K,"N/cm"),new(label+" · dy",f.Dy,"mm"),new(label+" · Veff mobilitato",f.Veff,"kN")]);
+        }
+        rows.AddRange([new("Cerchiature · K totale",total.K,"N/cm"),new("Cerchiature · Veff totale",total.Veff,"kN"),new("Finale · V",total.FinalV,"kN"),new("Finale · K",total.FinalK,"N/cm")]);
         Results=rows;Derivation=MasonryDerivation.Build(p).SelectMany(page=>page.Equations??[]).ToArray();Changed(nameof(Derivation));Comparison=MasonryReportBuilder.Compare(p);PierResults=MasonryReportBuilder.Piers(p);Changed(nameof(Comparison));Changed(nameof(BeforeResults));Changed(nameof(AfterResults));Changed(nameof(Results));ExportCommand.Refresh();ReportCommand.Refresh();WordReportCommand.Refresh();Status=$"Resistenza {(dv>=0?"non diminuita":"diminuita")}; rigidezza {(FrameCalculator.StiffnessAccepts(dk)?"entro":"oltre")} ±15%. Confronto preliminare, non verifica completa.";
     }
-    private void Invalidate(){try{Summary=Frame==null?MasonrySummaryViewModel.Empty:MasonrySummaryViewModel.Create(Build());}catch{Summary=MasonrySummaryViewModel.Empty;}Changed(nameof(Summary));Results=[];Derivation=[];Changed(nameof(Derivation));Comparison=[];PierResults=[];Changed(nameof(Comparison));Changed(nameof(BeforeResults));Changed(nameof(AfterResults));Frame?.ClearProposals();Changed(nameof(Results));Changed(nameof(Proposals));Changed(nameof(SelectedProposal));ExportCommand?.Refresh();ReportCommand?.Refresh();WordReportCommand?.Refresh();UseProfileCommand?.Refresh();Status="Dati modificati: ricalcolare.";}
+    private void Invalidate(){try{Summary=Frame==null?MasonrySummaryViewModel.Empty:MasonrySummaryViewModel.Create(Build());}catch{Summary=MasonrySummaryViewModel.Empty;}Changed(nameof(Summary));Results=[];Derivation=[];Changed(nameof(Derivation));Comparison=[];PierResults=[];Changed(nameof(Comparison));Changed(nameof(BeforeResults));Changed(nameof(AfterResults));foreach(var item in Frames)item.ClearProposals();Changed(nameof(Results));Changed(nameof(Proposals));Changed(nameof(SelectedProposal));ExportCommand?.Refresh();ReportCommand?.Refresh();WordReportCommand?.Refresh();UseProfileCommand?.Refresh();Status="Dati modificati: ricalcolare.";}
     private void Run(Action action){try{action();}catch(Exception e){Invalidate();Status=e.Message;}}
 }

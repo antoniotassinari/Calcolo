@@ -9,7 +9,7 @@ public static class MasonryFiles
     {
         var root=JsonNode.Parse(text)?.AsObject() ?? throw new ArgumentException("Progetto vuoto.");
         int version=root["version"]?.GetValue<int>()??1;
-        if (version is not (1 or 2)) throw new ArgumentException("Versione progetto non riconosciuta.");
+        if (version is not (1 or 2 or 3)) throw new ArgumentException("Versione progetto non riconosciuta.");
         foreach(var side in new[]{"before","after"})
         {
             var rows=root[side]?.AsArray() ?? throw new ArgumentException("Stato mancante: "+side);
@@ -32,15 +32,23 @@ public static class MasonryFiles
         if(root["frame"] is JsonObject frame && frame["enabled"]?.GetValue<bool>()==true)
             foreach(var key in new[]{"profile","catalogVersion","fy","gamma","h","E","nProfiles","nColumns","portal"})
                 if(frame[key] is null)throw new ArgumentException("Dato cerchiatura mancante: "+key);
-        root["version"]=2;
+        if(root["additionalFrames"] is JsonArray extra)
+            foreach(var node in extra)
+            {
+                var item=node as JsonObject ?? throw new ArgumentException("Cerchiatura nulla.");
+                if(item["enabled"]?.GetValue<bool>()==true)
+                    foreach(var key in new[]{"profile","catalogVersion","fy","gamma","h","E","nProfiles","nColumns","portal"})
+                        if(item[key] is null)throw new ArgumentException("Dato cerchiatura mancante: "+key);
+            }
+        root["version"]=root["additionalFrames"] is JsonArray {Count: >0}?3:2;
         var project=root.Deserialize<MasonryProject>(Options) ?? throw new ArgumentException("Progetto non valido.");
         Validate(project);return project;
     }
     public static void Validate(MasonryProject p)
     {
-        if(p.Version!=2||p.Frame is null||string.IsNullOrWhiteSpace(p.Title))throw new ArgumentException("Progetto non valido.");
-        var before=MasonryCalculator.Total(p.Before);var after=MasonryCalculator.Total(p.After);FrameCalculator.Calculate(p.Frame,before,after);
+        if(p.Version is not (2 or 3)||p.Frame is null||p.AdditionalFrames is null||string.IsNullOrWhiteSpace(p.Title))throw new ArgumentException("Progetto non valido.");
+        var before=MasonryCalculator.Total(p.Before);var after=MasonryCalculator.Total(p.After);FrameGroupCalculator.Calculate(p.AllFrames,before,after);
     }
-    public static string Write(MasonryProject p){Validate(p);return JsonSerializer.Serialize(p,Options);}
+    public static string Write(MasonryProject p){Validate(p);return JsonSerializer.Serialize(p with {Version=p.AdditionalFrames.Length>0?3:2},Options);}
     public static MasonryProject Example(){using var s=typeof(MasonryFiles).Assembly.GetManifestResourceStream("STA.Muratura.Core.esempio.json");using var reader=new StreamReader(s!);return Read(reader.ReadToEnd());}
 }

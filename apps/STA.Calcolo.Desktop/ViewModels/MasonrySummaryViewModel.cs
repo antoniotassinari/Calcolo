@@ -6,8 +6,8 @@ public sealed record MasonrySummaryViewModel(string StiffnessDelta,string Resist
     public static MasonrySummaryViewModel Create(MasonryProject p)
     {
         var a=MasonryCalculator.Total(p.Before);var b=MasonryCalculator.Total(p.After);
-        var f=FrameCalculator.Calculate(p.Frame,a,b);double k=f?.FinalK??b.K,v=f?.FinalV??b.Vt,dk=(k/a.K-1)*100,dv=(v/a.Vt-1)*100;
-        string end=f==null?"Dopo":"Dopo + cerchiatura";
+        var f=FrameGroupCalculator.Calculate(p.AllFrames,a,b);double k=f.FinalK,v=f.FinalV,dk=(k/a.K-1)*100,dv=(v/a.Vt-1)*100;
+        string end=f.Frames.All(r=>r==null)?"Dopo":"Dopo + cerchiature";
         return new($"{dk:N2} %",$"{dv:N2} %",$"Prima {a.K:N2} N/cm\n{end} {k:N2} N/cm",$"Prima {a.Vt:N2} kN\n{end} {v:N2} kN",FrameCalculator.StiffnessAccepts(dk)?"Entro ±15%":"Oltre ±15%",dv>=0?"Non diminuita":"Diminuita");
     }
 }
