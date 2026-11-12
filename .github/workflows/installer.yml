@@ -1,7 +1,13 @@
 name: Installer Windows
+run-name: ${{ inputs.descrizione || github.event.head_commit.message || 'Installer Windows' }}
 on:
   workflow_dispatch:
     inputs:
+      descrizione:
+        description: 'Titolo descrittivo dell’esecuzione'
+        type: string
+        required: true
+        default: 'Pubblica aggiornamento TA-Calcolo'
       publish:
         description: 'Pubblica una release stabile completa (solo da master)'
         type: boolean
